@@ -37,5 +37,8 @@
 		"typescript": "^5.5.3",
 		"vite": "^5.3.5"
 	},
-	"type": "module"
+	"type": "module",
+  	"engines": {
+    	"node": "20.x"
+  }
 }
