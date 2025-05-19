@@ -89,3 +89,4 @@ They will be able to access the deployed Studio, where you can collaborate toget
 - [SvelteKit documentation](https://svelte.dev/docs/kit/introduction/)
 - [Join the Sanity Community](https://slack.sanity.io)
 - [Learn Sanity](https://www.sanity.io/learn)
+# edgar-casarin
