@@ -6,6 +6,8 @@ export const postQuery = groq`*[_type == "post" && slug.current == $slug][0]`;
 
 export const postsQuery = groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc)`;
 
+export const aboutQuery = groq`*[_type == "about"][0]`;
+
 export interface Post {
 	_type: 'post';
 	_createdAt: string;
@@ -14,4 +16,12 @@ export interface Post {
 	excerpt?: string;
 	mainImage?: ImageAsset;
 	body: PortableTextBlock[];
+}
+
+export interface About {
+	_type: 'about';
+	bio: PortableTextBlock[];
+	headshot?: ImageAsset;
+	email?: string;
+	socialLinks?: string[];
 }
