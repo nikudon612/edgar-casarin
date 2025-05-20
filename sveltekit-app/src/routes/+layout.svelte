@@ -12,14 +12,14 @@
 {/if}
 
 <div class="container">
-	<header class="header">
+	<!-- <header class="header">
 		<a class="header__title" href="/">SvelteKit + Sanity</a>
-	</header>
+	</header> -->
 	<main>
 		<slot />
 	</main>
 	<footer class="footer">
-		<p class="footer__text">
+		<!-- <p class="footer__text">
 			Made with <svg
 				data-sanity-icon="heart-filled"
 				width="1em"
@@ -34,7 +34,7 @@
 					stroke-width="1.2"
 				/></svg
 			> at Sanity
-		</p>
+		</p> -->
 	</footer>
 </div>
 
