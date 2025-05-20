@@ -10,6 +10,10 @@
 	$: ({ data: posts } = $q);
 </script>
 
+<title>
+	Edgar Casarin - Design Services
+</title>
+
 <section>
 	{#if posts.length}
 		{#each posts as post}
