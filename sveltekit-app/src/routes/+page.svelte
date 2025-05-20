@@ -10,7 +10,7 @@
 
 	$: ({ data: projects } = $q);
 
-	console.log("projects:", data);
+	console.log("homepage projects:", data.options.initial.data);
 </script>
 
 <title>
