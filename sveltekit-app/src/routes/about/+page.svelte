@@ -20,9 +20,9 @@
 			<PortableText value={about.bio} />
 		{/if}
 
-		{#if about?.email}
+		<!-- {#if about?.email}
 			<p>Email: <a href={`mailto:${about.email}`}>{about.email}</a></p>
-		{/if}
+		{/if} -->
 	</section>
 {:else}
 	<p>Loading about info...</p>
