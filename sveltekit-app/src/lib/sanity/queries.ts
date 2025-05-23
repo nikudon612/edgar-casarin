@@ -10,6 +10,8 @@ export const aboutQuery = groq`*[_type == "about"][0]`;
 
 export const allProjectsQuery = groq`*[_type == "project" && defined(slug.current)] | order(date desc)`;
 
+export const singleProjectQuery = groq`*[_type == "project" && slug.current == $slug][0]`;
+
 export interface Post {
 	_type: 'post';
 	_createdAt: string;
