@@ -10,7 +10,25 @@ export const aboutQuery = groq`*[_type == "about"][0]`;
 
 export const allProjectsQuery = groq`*[_type == "project" && defined(slug.current)] | order(date desc)`;
 
-export const singleProjectQuery = groq`*[_type == "project" && slug.current == $slug][0]`;
+export const singleProjectQuery = groq`
+  *[_type == "project" && slug.current == $slug][0]{
+    _id,
+    title,
+    description,
+    slug,
+    thumbnail {
+      asset->{
+        url
+      }
+    },
+    mediaGallery[]{
+      _type,
+      asset->{
+        url
+      }
+    }
+  }
+`;
 
 export interface Post {
 	_type: 'post';

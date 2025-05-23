@@ -8,7 +8,7 @@ export const load = async ({ params }) => {
 		slug: params.slug
 	});
 
-    console.log('Single Project:', project);
+    // console.log('Single Project:', project);
 
 	if (!project) throw error(404, 'Project not found');
 
