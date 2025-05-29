@@ -113,7 +113,7 @@
 		}
 
 		.footer {
-			margin: var(--space-3) 0;
+			/* margin: var(--space-3) 0; */
 		}
 	}
 
