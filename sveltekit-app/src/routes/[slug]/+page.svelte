@@ -21,7 +21,7 @@
 			<h2>Gallery</h2>
 			<ul>
 				{#each project.mediaGallery as item}
-					<img src={item.asset.url} />
+					<img src={item.asset.url} alt={project.title} />
 				{/each}
 			</ul>
 		</section>
