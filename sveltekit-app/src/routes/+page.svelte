@@ -25,6 +25,12 @@
 			<h2>Row 1</h2>
 			<Row1 projects={row1Projects} row="row1" />
 		{/if}
+		<!-- Navigation Section -->
+		<div class="row-nav">
+			<h2>Edgar Casarin</h2>
+			<h2>Project Name</h2>
+			<a>Info</a>
+		</div>
 		{#if row2Projects.length}
 			<h2>Row 2</h2>
 			<Row2 projects={row2Projects} row="row2" />
@@ -33,3 +39,23 @@
 		<Welcome />
 	{/if}
 </section>
+
+<style>
+	section {
+		width: 100%;
+	}
+	.row-nav {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	h2 {
+		margin: 0;
+		font-size: 1.5rem;
+	}
+
+	a:hover {
+		text-decoration: underline;
+	}
+</style>

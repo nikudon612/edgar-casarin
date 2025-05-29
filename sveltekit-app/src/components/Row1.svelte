@@ -15,7 +15,7 @@
 	.row-1 {
 		display: flex;
 		overflow-x: scroll;
-		gap: 1rem;
+		/* gap: 1rem; */
 		/* Add animation styles here if needed */
 	}
 </style>
