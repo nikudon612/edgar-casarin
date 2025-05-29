@@ -24,11 +24,17 @@
 
 <section>
 	{#if projects.length}
-		{#each projects as proj}
+		<!-- {#each projects as proj}
 			<ProjectCard {proj} />
-		{/each}
-		<Row1 projects={row1Projects} />
-		<Row2 projects={row2Projects} />
+		{/each} -->
+		{#if row1Projects.length}
+			<h2>Row 1 Projects</h2>
+			<Row1 projects={row1Projects} />
+		{/if}
+		{#if row2Projects.length}
+			<h2>Row 2 Projects</h2>
+			<Row2 projects={row2Projects} />
+		{/if}
 	{:else}
 		<Welcome />
 	{/if}

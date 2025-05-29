@@ -1,12 +1,21 @@
 <script lang="ts">
-	import Card from './Card.svelte';
-	import type { Post } from '$lib/sanity/queries';
+	import ProjectCard from './ProjectCard.svelte';
+	import type { Project } from '$lib/sanity/queries';
 
-	export let projects: Post[];
+	export let projects: Project[];
 </script>
 
 <div class="row row-1">
-	{#each projects.filter(p => p.row1Image) as post}
-		<Card post={post} imageOverride={post.row1Image} />
+	{#each projects as proj}
+		<ProjectCard {proj} />
 	{/each}
 </div>
+
+<style>
+	.row-1 {
+		display: flex;
+		overflow-x: scroll;
+		gap: 1rem;
+		/* Add animation styles here if needed */
+	}
+</style>

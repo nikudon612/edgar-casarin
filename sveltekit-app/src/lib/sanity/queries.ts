@@ -69,4 +69,7 @@ export interface Project {
 			_type: 'reference';
 		};
 	}>;
+	row1Images?: ImageAsset[];
+	row2Images?: ImageAsset[];
 }
+
