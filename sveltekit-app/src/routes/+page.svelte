@@ -27,7 +27,7 @@
 		<!-- Navigation Section -->
 		<div class="row-nav">
 			<h2>Edgar Casarin</h2>
-			<p>Project Name</p>
+			<p class="center-text">Project Name</p>
 			<a href="/about" class="info">Info</a>
 		</div>
 		{#if row2Projects.length}
@@ -46,10 +46,22 @@
 		padding: 0;
 	}
 	.row-nav {
+		position: relative;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		height: 4vh;
+		padding: 0 1rem;
+	}
+
+	/* This will pin the middle <p> dead center, independent of left/right content */
+	.center-text {
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+		margin: 0;
+		font-size: 1rem;
+		pointer-events: none; /* optional: prevents hover overlap issues */
 	}
 
 	h2 {
