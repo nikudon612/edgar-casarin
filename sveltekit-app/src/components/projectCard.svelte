@@ -3,21 +3,26 @@
 	import type { Project } from '$lib/sanity/queries';
 
 	export let proj: Project;
+	export let row: 'row1' | 'row2';
+
+	$: images = row === 'row1' ? (proj.row1Images ?? []) : (proj.row2Images ?? []);
 </script>
 
-<a class="project-card" href={`${proj.slug.current}`}>
-	{#if proj.thumbnail}
-		<img
-			class="project-card__image"
-			src={urlFor(proj.thumbnail).width(1000).auto('format').url()}
-			alt={`Cover image for ${proj.title}`}
-		/>
-	{:else}
+{#if images.length > 0}
+	{#each images as image}
+		<a class="project-card" href={`/${proj.slug.current}`}>
+			<img
+				class="project-card__image"
+				src={urlFor(image).width(1000).auto('format').url()}
+				alt={`Image for ${proj.title}`}
+			/>
+		</a>
+	{/each}
+{:else}
+	<a class="project-card" href={`/${proj.slug.current}`}>
 		<div class="project-card__image--none" />
-	{/if}
-
-	<!-- Optional: Text overlay or title could go here -->
-</a>
+	</a>
+{/if}
 
 <style>
 	.project-card {

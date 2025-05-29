@@ -7,7 +7,7 @@
 
 <div class="row row-2">
 	{#each projects as proj}
-		<ProjectCard {proj} />
+		<ProjectCard {proj} row="row2" />
 	{/each}
 </div>
 

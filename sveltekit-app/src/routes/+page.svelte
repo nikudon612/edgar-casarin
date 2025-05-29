@@ -22,12 +22,12 @@
 <section>
 	{#if projects.length}
 		{#if row1Projects.length}
-			<h2>Row 1 Projects</h2>
-			<Row1 projects={row1Projects} />
+			<h2>Row 1</h2>
+			<Row1 projects={row1Projects} row="row1" />
 		{/if}
 		{#if row2Projects.length}
-			<h2>Row 2 Projects</h2>
-			<Row2 projects={row2Projects} />
+			<h2>Row 2</h2>
+			<Row2 projects={row2Projects} row="row2" />
 		{/if}
 	{:else}
 		<Welcome />
