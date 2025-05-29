@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { useQuery } from '@sanity/svelte-loader';
-	import Card from '../components/Card.svelte';
-	import ProjectCard from '../components/projectCard.svelte';
+	import Row1 from '../components/Row1.svelte';
+	import Row2 from '../components/Row2.svelte';
 	import Welcome from '../components/Welcome.svelte';
 	import type { PageData } from './$types';
 
@@ -9,27 +9,27 @@
 	const q = useQuery(data);
 
 	$: ({ data: projects } = $q);
+	$: console.log('homepage projects:', projects);
 
-	console.log("homepage projects:", data.options.initial.data);
+	$: row1Projects = projects.filter((p) => Array.isArray(p.row1Images) && p.row1Images.length > 0);
+	$: row2Projects = projects.filter((p) => Array.isArray(p.row2Images) && p.row2Images.length > 0);
+	$: console.log('row1Projects:', row1Projects);
+	$: console.log('row2Projects:', row2Projects);
 </script>
 
-<title>
-	Edgar Casarin - Design Services
-</title>
+<title> Edgar Casarin - Design Services </title>
 
 <section>
 	{#if projects.length}
-		{#each projects as proj}
-			<ProjectCard {proj} />
-		{/each}
+		{#if row1Projects.length}
+			<h2>Row 1 Projects</h2>
+			<Row1 projects={row1Projects} />
+		{/if}
+		{#if row2Projects.length}
+			<h2>Row 2 Projects</h2>
+			<Row2 projects={row2Projects} />
+		{/if}
 	{:else}
 		<Welcome />
 	{/if}
-	<!-- {#if posts.length}
-		{#each posts as post}
-			<Card {post} />
-		{/each}
-	{:else}
-		<Welcome />
-	{/if} -->
 </section>
