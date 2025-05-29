@@ -5,7 +5,7 @@
 	export let proj: Project;
 </script>
 
-<a class="project-card" href={`/project/${proj.slug.current}`}>
+<a class="project-card" href={`${proj.slug.current}`}>
 	{#if proj.thumbnail}
 		<img
 			class="project-card__image"
