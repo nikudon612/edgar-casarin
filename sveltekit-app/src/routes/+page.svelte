@@ -22,17 +22,15 @@
 <section>
 	{#if projects.length}
 		{#if row1Projects.length}
-			<h2>Row 1</h2>
 			<Row1 projects={row1Projects} row="row1" />
 		{/if}
 		<!-- Navigation Section -->
 		<div class="row-nav">
 			<h2>Edgar Casarin</h2>
-			<h2>Project Name</h2>
-			<a>Info</a>
+			<p>Project Name</p>
+			<a href="/about" class="info">Info</a>
 		</div>
 		{#if row2Projects.length}
-			<h2>Row 2</h2>
 			<Row2 projects={row2Projects} row="row2" />
 		{/if}
 	{:else}
@@ -43,11 +41,15 @@
 <style>
 	section {
 		width: 100%;
+		height: 100vh;
+		margin: 0;
+		padding: 0;
 	}
 	.row-nav {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		height: 4vh;
 	}
 
 	h2 {
@@ -57,5 +59,10 @@
 
 	a:hover {
 		text-decoration: underline;
+	}
+	.info {
+		text-decoration: none;
+		color: var(--primary-color);
+		font-weight: bold;
 	}
 </style>

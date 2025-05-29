@@ -26,19 +26,19 @@
 
 <style>
 	.project-card {
+		flex: 0 0 auto; /* prevents shrinking */
+		height: 100%;
+		width: auto; /* or set to 100vw if you want each image to take up full width */
 		display: block;
-		position: relative;
-		width: auto;
-		height: auto;
 		overflow: hidden;
-		text-decoration: none;
+		position: relative;
 	}
 
 	.project-card__image {
-		display: block;
-		width: 100%;
-		height: auto;
+		height: 100%;
+		width: auto;
 		object-fit: cover;
+		display: block;
 	}
 
 	.project-card__image--none {

@@ -15,7 +15,11 @@
 	.row-2 {
 		display: flex;
 		overflow-x: scroll;
-		/* gap: 1rem; */
-		/* Add animation styles here if needed */
+		flex-direction: row;
+		/* overflow-x: auto; */
+		overflow-y: hidden;
+		/* gap: 2rem; */
+		height: 48vh; /* or calc(50vh - nav height / padding) */
+		scrollbar-width: none;
 	}
 </style>
