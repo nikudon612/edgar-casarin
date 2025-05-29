@@ -7,7 +7,7 @@
 
 <div class="row row-1">
 	{#each projects as proj}
-		<ProjectCard {proj} />
+		<ProjectCard {proj} row="row1" />
 	{/each}
 </div>
 
@@ -15,7 +15,7 @@
 	.row-1 {
 		display: flex;
 		overflow-x: scroll;
-		gap: 1rem;
+		/* gap: 1rem; */
 		/* Add animation styles here if needed */
 	}
 </style>

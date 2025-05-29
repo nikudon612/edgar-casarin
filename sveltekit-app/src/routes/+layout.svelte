@@ -91,8 +91,8 @@
 
 	@media (min-width: 575px) {
 		.container {
-			max-width: var(--max-width-1);
-			padding: 0 var(--space-4);
+			/* max-width: var(--max-width-1); */
+			/* padding: 0 var(--space-4); */
 		}
 
 		main {
