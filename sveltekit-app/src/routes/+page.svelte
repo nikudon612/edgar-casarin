@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { useQuery } from '@sanity/svelte-loader';
-	import ProjectCard from '../components/projectCard.svelte';
 	import Row1 from '../components/Row1.svelte';
 	import Row2 from '../components/Row2.svelte';
 	import Welcome from '../components/Welcome.svelte';
@@ -12,10 +11,8 @@
 	$: ({ data: projects } = $q);
 	$: console.log('homepage projects:', projects);
 
-	// console.log('homepage projects:', data.options.initial.data);
-
-	$: row1Projects = projects.filter((p) => p.row === 'row1');
-	$: row2Projects = projects.filter((p) => p.row === 'row2');
+	$: row1Projects = projects.filter((p) => Array.isArray(p.row1Images) && p.row1Images.length > 0);
+	$: row2Projects = projects.filter((p) => Array.isArray(p.row2Images) && p.row2Images.length > 0);
 	$: console.log('row1Projects:', row1Projects);
 	$: console.log('row2Projects:', row2Projects);
 </script>
@@ -24,9 +21,6 @@
 
 <section>
 	{#if projects.length}
-		<!-- {#each projects as proj}
-			<ProjectCard {proj} />
-		{/each} -->
 		{#if row1Projects.length}
 			<h2>Row 1 Projects</h2>
 			<Row1 projects={row1Projects} />
@@ -38,11 +32,4 @@
 	{:else}
 		<Welcome />
 	{/if}
-	<!-- {#if posts.length}
-		{#each posts as post}
-			<Card {post} />
-		{/each}
-	{:else}
-		<Welcome />
-	{/if} -->
 </section>

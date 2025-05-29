@@ -28,17 +28,5 @@ export default {
       of: [{type: 'image'}, {type: 'file'}],
     },
     {name: 'date', type: 'datetime'},
-    {
-      name: 'row',
-      type: 'string',
-      title: 'Row',
-      options: {
-        list: [
-          {title: 'Row 1', value: 'row1'},
-          {title: 'Row 2', value: 'row2'},
-        ],
-        layout: 'radio', // or 'dropdown'
-      },
-    },
   ],
 }

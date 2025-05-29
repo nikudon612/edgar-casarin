@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ProjectCard from './ProjectCard.svelte';
+	import ProjectCard from './projectCard.svelte';
 	import type { Project } from '$lib/sanity/queries';
 
 	export let projects: Project[];
