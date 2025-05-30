@@ -3,15 +3,26 @@
 	import type { Project } from '$lib/sanity/queries';
 
 	export let projects: Project[];
+
+	// Flatten all images across all projects
+	$: flatImages = projects
+		.flatMap((proj) =>
+			(proj.row1Images ?? []).map((imgObj) => ({
+				image: imgObj.image,
+				order: imgObj.order ?? Infinity,
+				proj
+			}))
+		)
+		.sort((a, b) => a.order - b.order);
 </script>
 
 <div class="scroll-wrapper">
 	<div class="row row-1">
-		{#each projects as proj (proj._id)}
-			<ProjectCard {proj} row="row1" />
+		{#each flatImages as item, i (item.proj._id + '-' + i)}
+			<ProjectCard proj={item.proj} row="row1" image={item.image} />
 		{/each}
-		{#each projects as proj (proj._id + '-copy')}
-			<ProjectCard {proj} row="row1" />
+		{#each flatImages as item, i (item.proj._id + '-copy-' + i)}
+			<ProjectCard proj={item.proj} row="row1" image={item.image} />
 		{/each}
 	</div>
 </div>

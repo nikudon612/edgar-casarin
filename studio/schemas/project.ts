@@ -12,13 +12,29 @@ export default {
       name: 'row1Images',
       type: 'array',
       title: 'Row 1 Images',
-      of: [{type: 'image'}],
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {name: 'image', type: 'image', title: 'Image'},
+            {name: 'order', type: 'number', title: 'Order'},
+          ],
+        },
+      ],
     },
     {
       name: 'row2Images',
       type: 'array',
       title: 'Row 2 Images',
-      of: [{type: 'image'}],
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {name: 'image', type: 'image', title: 'Image'},
+            {name: 'order', type: 'number', title: 'Order'},
+          ],
+        },
+      ],
     },
     {name: 'description', type: 'text'},
     {

@@ -69,7 +69,11 @@ export interface Project {
 			_type: 'reference';
 		};
 	}>;
-	row1Images?: ImageAsset[];
-	row2Images?: ImageAsset[];
+	row1Images?: ProjectImageWithOrder[];
+	row2Images?: ProjectImageWithOrder[];
 }
 
+export interface ProjectImageWithOrder {
+	image: ImageAsset;
+	order: number;
+}

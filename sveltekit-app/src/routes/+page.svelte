@@ -11,8 +11,27 @@
 	$: ({ data: projects } = $q);
 	$: console.log('homepage projects:', projects);
 
-	$: row1Projects = projects.filter((p) => Array.isArray(p.row1Images) && p.row1Images.length > 0);
-	$: row2Projects = projects.filter((p) => Array.isArray(p.row2Images) && p.row2Images.length > 0);
+	// Helper to get the lowest order value from an array of images
+	function getMinOrder(images) {
+		return images?.length ? Math.min(...images.map((img) => img.order ?? Infinity)) : Infinity;
+	}
+
+	$: row1Projects = projects
+		.filter((p) => Array.isArray(p.row1Images) && p.row1Images.length > 0)
+		.sort((a, b) => getMinOrder(a.row1Images) - getMinOrder(b.row1Images))
+		.map((p) => ({
+			...p,
+			row1Images: [...p.row1Images].sort((a, b) => a.order - b.order)
+		}));
+
+	$: row2Projects = projects
+		.filter((p) => Array.isArray(p.row2Images) && p.row2Images.length > 0)
+		.sort((a, b) => getMinOrder(a.row2Images) - getMinOrder(b.row2Images))
+		.map((p) => ({
+			...p,
+			row2Images: [...p.row2Images].sort((a, b) => a.order - b.order)
+		}));
+
 	$: console.log('row1Projects:', row1Projects);
 	$: console.log('row2Projects:', row2Projects);
 </script>
