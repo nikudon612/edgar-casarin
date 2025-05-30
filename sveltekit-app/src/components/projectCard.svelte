@@ -5,24 +5,20 @@
 	export let proj: Project;
 	export let row: 'row1' | 'row2';
 
-	$: images = row === 'row1' ? (proj.row1Images ?? []) : (proj.row2Images ?? []);
+	export let image: any; // This is a single image object from row1Images or row2Images
 </script>
 
-{#if images.length > 0}
-	{#each images as image}
-		<a class="project-card" href={`/${proj.slug.current}`}>
-			<img
-				class="project-card__image"
-				src={urlFor(image).width(1000).auto('format').url()}
-				alt={`Image for ${proj.title}`}
-			/>
-		</a>
-	{/each}
-{:else}
-	<a class="project-card" href={`/${proj.slug.current}`}>
+<a class="project-card" href={`/${proj.slug.current}`}>
+	{#if image?.asset?._ref}
+		<img
+			class="project-card__image"
+			src={urlFor(image).width(1000).auto('format').url()}
+			alt={`Image for ${proj.title}`}
+		/>
+	{:else}
 		<div class="project-card__image--none" />
-	</a>
-{/if}
+	{/if}
+</a>
 
 <style>
 	.project-card {

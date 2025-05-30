@@ -11,8 +11,27 @@
 	$: ({ data: projects } = $q);
 	$: console.log('homepage projects:', projects);
 
-	$: row1Projects = projects.filter((p) => Array.isArray(p.row1Images) && p.row1Images.length > 0);
-	$: row2Projects = projects.filter((p) => Array.isArray(p.row2Images) && p.row2Images.length > 0);
+	// Helper to get the lowest order value from an array of images
+	function getMinOrder(images) {
+		return images?.length ? Math.min(...images.map((img) => img.order ?? Infinity)) : Infinity;
+	}
+
+	$: row1Projects = projects
+		.filter((p) => Array.isArray(p.row1Images) && p.row1Images.length > 0)
+		.sort((a, b) => getMinOrder(a.row1Images) - getMinOrder(b.row1Images))
+		.map((p) => ({
+			...p,
+			row1Images: [...p.row1Images].sort((a, b) => a.order - b.order)
+		}));
+
+	$: row2Projects = projects
+		.filter((p) => Array.isArray(p.row2Images) && p.row2Images.length > 0)
+		.sort((a, b) => getMinOrder(a.row2Images) - getMinOrder(b.row2Images))
+		.map((p) => ({
+			...p,
+			row2Images: [...p.row2Images].sort((a, b) => a.order - b.order)
+		}));
+
 	$: console.log('row1Projects:', row1Projects);
 	$: console.log('row2Projects:', row2Projects);
 </script>
@@ -21,18 +40,18 @@
 
 <section>
 	{#if projects.length}
-		<!-- {#if row1Projects.length}
+		{#if row1Projects.length}
 			<Row1 projects={row1Projects} row="row1" />
-		{/if} -->
+		{/if}
 		<!-- Navigation Section -->
 		<div class="row-nav">
 			<h2>Edgar Casarin</h2>
 			<p class="center-text">Project Name</p>
 			<a href="/about" class="info">Info</a>
 		</div>
-		<!-- {#if row2Projects.length}
+		{#if row2Projects.length}
 			<Row2 projects={row2Projects} row="row2" />
-		{/if} -->
+		{/if}
 	{:else}
 		<Welcome />
 	{/if}
