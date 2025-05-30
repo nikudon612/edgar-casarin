@@ -21,18 +21,18 @@
 
 <section>
 	{#if projects.length}
-		{#if row1Projects.length}
+		<!-- {#if row1Projects.length}
 			<Row1 projects={row1Projects} row="row1" />
-		{/if}
+		{/if} -->
 		<!-- Navigation Section -->
 		<div class="row-nav">
 			<h2>Edgar Casarin</h2>
 			<p class="center-text">Project Name</p>
 			<a href="/about" class="info">Info</a>
 		</div>
-		{#if row2Projects.length}
+		<!-- {#if row2Projects.length}
 			<Row2 projects={row2Projects} row="row2" />
-		{/if}
+		{/if} -->
 	{:else}
 		<Welcome />
 	{/if}
