@@ -27,7 +27,7 @@
 		display: flex;
 		flex-direction: row;
 		height: 48vh;
-		animation: scroll-left 25s cubic-bezier(0.33, 1, 0.68, 1) infinite;
+		animation: scroll-left 20s linear infinite;
 		will-change: transform;
 	}
 

@@ -9,17 +9,32 @@
 	{#each projects as proj}
 		<ProjectCard {proj} row="row2" />
 	{/each}
+	{#each projects as proj (proj._id + '-copy')}
+		<ProjectCard {proj} row="row2" />
+	{/each}
 </div>
 
 <style>
+	.scroll-wrapper {
+		overflow: hidden;
+		width: 100vw;
+		position: relative;
+	}
+
 	.row-2 {
 		display: flex;
-		overflow-x: scroll;
 		flex-direction: row;
-		/* overflow-x: auto; */
-		overflow-y: hidden;
-		/* gap: 2rem; */
-		height: 48vh; /* or calc(50vh - nav height / padding) */
-		scrollbar-width: none;
+		height: 48vh;
+		animation: scroll-right 20s linear infinite;
+		will-change: transform;
+	}
+
+	@keyframes scroll-right {
+		from {
+			transform: translateX(-50%);
+		}
+		to {
+			transform: translateX(0);
+		}
 	}
 </style>
