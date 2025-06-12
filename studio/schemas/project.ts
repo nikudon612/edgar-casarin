@@ -15,17 +15,40 @@ export default {
       options: {
         list: [
           {title: 'Column (Single Vertical Stack)', value: 'column'},
-          {title: 'Rows of 3 (Grid)', value: 'grid'},
+          {title: 'Row  of 2 (2 Images per Row)', value: 'twoRow'},
+          {title: 'Rows of 3 (Grid)', value: 'threeRow'},
         ],
         layout: 'radio', // or 'dropdown' if preferred
       },
       initialValue: 'column',
     },
-     {
+    {
       name: 'mediaGallery',
       type: 'array',
       title: 'Project Page Gallery',
       of: [{type: 'image'}, {type: 'file'}],
+      hidden: ({parent}) => parent?.layoutStyle !== 'column',
+    },
+    {
+      name: 'twoRowGallery',
+      title: 'Two Row Layout',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          title: 'Image Row (Max 2)',
+          fields: [
+            {
+              name: 'images',
+              title: 'Images in this Row',
+              type: 'array',
+              of: [{type: 'image'}],
+              validation: (Rule) => Rule.max(2).error('Only up to 2 images are allowed per row.'),
+            },
+          ],
+        },
+      ],
+      hidden: ({parent}) => parent?.layoutStyle !== 'twoRow',
     },
     {
       name: 'galleryRows',
@@ -46,6 +69,7 @@ export default {
           ],
         },
       ],
+      hidden: ({parent}) => parent?.layoutStyle === 'column',
     },
     {
       name: 'row1Images',

@@ -28,7 +28,7 @@
 				{/if} -->
 
 				<section>
-					{#if layout === 'grid'}
+					{#if layout === 'threeRow'}
 						<!-- Custom 3-image-per-row layout -->
 						<div class="gallery-rows">
 							{#each project?.galleryRows as row}
