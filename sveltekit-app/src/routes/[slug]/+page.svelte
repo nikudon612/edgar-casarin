@@ -1,5 +1,6 @@
 <script lang="ts">
 	import ProjectPageMenu from '../../components/ProjectPageMenu.svelte';
+	import ProjectCarousel from '../../components/ProjectCarousel.svelte';
 	export let data;
 	const project = data.project;
 
@@ -36,6 +37,7 @@
 		{:else}
 			<p>Loading…</p>
 		{/if}
+		<ProjectCarousel currentSlug={project?.slug?.current} />
 	</main>
 </div>
 

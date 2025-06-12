@@ -95,6 +95,9 @@
 	.name {
 		font-size: 0.875rem;
 	}
+	.name:hover {
+		cursor: default;
+	}
 	.info {
 		font-size: 0.875rem;
 		text-decoration: none;
