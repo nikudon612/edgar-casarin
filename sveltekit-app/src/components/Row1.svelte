@@ -37,7 +37,7 @@
 	.row-1 {
 		display: flex;
 		flex-direction: row;
-		height: 48vh;
+		height: 48.5vh;
 		animation: scroll-left 20s linear infinite;
 		will-change: transform;
 	}

@@ -4,7 +4,7 @@
 	import Row2 from '../components/Row2.svelte';
 	import Welcome from '../components/Welcome.svelte';
 	import type { PageData } from './$types';
-	import { hoveredProjectName } from '../lib/stores'; 
+	import { hoveredProjectName } from '../lib/stores';
 
 	export let data: PageData;
 	const q = useQuery(data);
@@ -46,7 +46,7 @@
 		{/if}
 		<!-- Navigation Section -->
 		<div class="row-nav">
-			<h2>Edgar Casarin</h2>
+			<h2 class="name">Edgar Casarin</h2>
 			<p class="center-text">{$hoveredProjectName}</p>
 			<a href="/about" class="info">Info</a>
 		</div>
@@ -70,7 +70,7 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		height: 4vh;
+		height: 3vh;
 		padding: 0 1rem;
 	}
 
@@ -80,7 +80,7 @@
 		left: 50%;
 		transform: translateX(-50%);
 		margin: 0;
-		font-size: 1rem;
+		font-size: 0.875rem;
 		pointer-events: none; /* optional: prevents hover overlap issues */
 	}
 
@@ -92,9 +92,12 @@
 	a:hover {
 		text-decoration: underline;
 	}
+	.name {
+		font-size: 0.875rem;
+	}
 	.info {
+		font-size: 0.875rem;
 		text-decoration: none;
 		color: var(--primary-color);
-		font-weight: bold;
 	}
 </style>
