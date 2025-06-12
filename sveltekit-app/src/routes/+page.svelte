@@ -4,6 +4,7 @@
 	import Row2 from '../components/Row2.svelte';
 	import Welcome from '../components/Welcome.svelte';
 	import type { PageData } from './$types';
+	import { hoveredProjectName } from '../lib/stores'; 
 
 	export let data: PageData;
 	const q = useQuery(data);
@@ -32,8 +33,8 @@
 			row2Images: [...p.row2Images].sort((a, b) => a.order - b.order)
 		}));
 
-	$: console.log('row1Projects:', row1Projects);
-	$: console.log('row2Projects:', row2Projects);
+	// $: console.log('row1Projects:', row1Projects);
+	// $: console.log('row2Projects:', row2Projects);
 </script>
 
 <title> Edgar Casarin - Design Services </title>
@@ -46,7 +47,7 @@
 		<!-- Navigation Section -->
 		<div class="row-nav">
 			<h2>Edgar Casarin</h2>
-			<p class="center-text">Project Name</p>
+			<p class="center-text">{$hoveredProjectName}</p>
 			<a href="/about" class="info">Info</a>
 		</div>
 		{#if row2Projects.length}

@@ -14,7 +14,7 @@
 			<p class="project-menu-desc">{project.description}</p>
 		</div>
 	{:else}
-		<p>Loading project data...</p>
+		<p style="color:black; font-size:14px">Loading project data...</p>
 	{/if}
 	<a href="/about" style="text-decoration: none; color:black" class="info">Info</a>
 </div>

@@ -1,14 +1,27 @@
 <script lang="ts">
 	import { urlFor } from '$lib/sanity/image';
 	import type { Project } from '$lib/sanity/queries';
+	import { hoveredProjectName } from '$lib/stores'; // ✅ Add this
 
 	export let proj: Project;
 	export let row: 'row1' | 'row2';
-
 	export let image: any; // This is a single image object from row1Images or row2Images
+
+	function handleMouseEnter() {
+		hoveredProjectName.set(proj.title);
+	}
+
+	function handleMouseLeave() {
+		hoveredProjectName.set('');
+	}
 </script>
 
-<a class="project-card" href={`/${proj.slug.current}`}>
+<a
+	class="project-card"
+	href={`/${proj.slug.current}`}
+	on:mouseenter={handleMouseEnter}
+	on:mouseleave={handleMouseLeave}
+>
 	{#if image?.asset?._ref}
 		<img
 			class="project-card__image"
