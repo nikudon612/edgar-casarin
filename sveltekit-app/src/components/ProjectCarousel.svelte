@@ -8,7 +8,7 @@
 	let filteredProjects = [];
 
 	onMount(() => {
-		filteredProjects = projects.filter(p => p.slug.current !== currentSlug);
+		filteredProjects = projects.filter((p) => p.slug.current !== currentSlug);
 		// Duplicate projects to simulate infinite scrolling
 		filteredProjects = [...filteredProjects, ...filteredProjects];
 	});
@@ -40,13 +40,14 @@
 		align-items: center;
 		padding: 1rem 0;
 		gap: 1rem;
-        height: 235px;
+		height: 235px;
 	}
 
 	.label {
 		flex: 0 0 auto;
-		font-size: 1rem;
+		font-size: 0.875rem;
 		padding: 0 1rem;
+		color: #353535;
 	}
 
 	.label.right {
@@ -79,8 +80,8 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		font-size: 0.8rem;
-		color: #666;
+		font-size: 0.875rem;
+		color: #353535;
 	}
 
 	@keyframes scrollLeft {

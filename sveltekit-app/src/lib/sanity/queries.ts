@@ -21,6 +21,17 @@ export const singleProjectQuery = groq`
         url
       }
     },
+	thumbnail {
+      asset->{ url }
+    },
+	layoutStyle,
+	galleryRows[]{
+      images[]{
+        asset->{
+          url
+        }
+      }
+    },
     mediaGallery[]{
       _type,
       asset->{
