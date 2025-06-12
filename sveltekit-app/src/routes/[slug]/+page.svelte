@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ProjectPageMenu from '../../components/ProjectPageMenu.svelte';
 	export let data;
 	const project = data.project;
 
@@ -7,8 +8,8 @@
 
 {#if project}
 	<article>
-		<!-- <h1>{project.title}</h1> -->
-		<!-- <p>{project.description}</p> -->
+		<!-- Render project menu -->
+		<ProjectPageMenu {project} />
 
 		<!-- Render thumbnail -->
 		{#if project.thumbnail?.asset?.url}
