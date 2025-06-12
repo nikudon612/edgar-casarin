@@ -20,15 +20,15 @@
 	<main class="content">
 		{#if project}
 			<article>
-				{#if project.thumbnail?.asset?.url}
-					<img src={project.thumbnail.asset.url} alt="Project Thumbnail" />
+				{#if project?.thumbnail?.asset?.url}
+					<img src={project?.thumbnail?.asset?.url} alt="Project Thumbnail" />
 				{/if}
 
 				<section>
 					<h2>Gallery</h2>
 					<ul>
-						{#each project.mediaGallery as item}
-							<li><img src={item.asset.url} alt={project.title} /></li>
+						{#each project?.mediaGallery as item}
+							<li><img src={item?.asset?.url} alt={project.title} /></li>
 						{/each}
 					</ul>
 				</section>
