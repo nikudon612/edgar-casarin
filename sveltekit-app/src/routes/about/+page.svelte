@@ -82,6 +82,12 @@
 		color: #353535;
 	}
 
+	:global(.bio-text a) {
+		color: #353535;
+		/* text-decoration: none; */
+		/* font-weight: 500; */
+	}
+
 	.bio-text p {
 		margin: 0 !important;
 	}
