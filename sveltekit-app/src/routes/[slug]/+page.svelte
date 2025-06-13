@@ -22,7 +22,7 @@
 	<!-- Scrollable project content -->
 	<main class="content">
 		{#if project}
-			<article>
+			<article class="project">
 				<section>
 					{#if project.columnImages?.length}
 						<!-- COLUMN LAYOUT -->
@@ -62,6 +62,10 @@
 		overflow: hidden;
 	}
 
+	.project {
+		margin-bottom: 18rem;
+	}
+
 	.menu {
 		width: 320px;
 		flex-shrink: 0;
@@ -79,12 +83,15 @@
 
 	.gallery-rows {
 		width: 100%;
+		gap: 6rem;
+		display: flex;
+		flex-direction: column;
 	}
 
 	.gallery-rows .image-row {
 		display: flex;
-		margin-bottom: 1.5rem;
 		align-items: flex-start; /* <-- This ensures top alignment */
+		flex-direction: row;
 	}
 
 	.gallery-rows .image-row img {
@@ -96,7 +103,6 @@
 	.gallery-column {
 		display: flex;
 		flex-direction: column;
-		gap: 1rem;
 		padding: 0;
 		list-style: none;
 	}
@@ -112,9 +118,6 @@
 		display: flex;
 		justify-content: flex-start;
 		align-items: flex-start;
-		margin-bottom: 1.5rem;
-		padding-bottom: 6rem;
-		/* max-width: 100vw; */
 	}
 
 	/* Layout: row of 3 */
