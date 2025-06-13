@@ -88,7 +88,9 @@
 		overflow-x: auto;
 		scroll-snap-type: x mandatory;
 	}
-
+	.carousel-track::-webkit-scrollbar {
+		display: none; /* Chrome, Safari, Opera */
+	}
 	.carousel-item {
 		flex: 0 0 auto;
 		display: flex;
