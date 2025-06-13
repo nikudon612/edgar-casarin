@@ -3,8 +3,10 @@
 	import ProjectCarousel from '../../components/ProjectCarousel.svelte';
 	export let data;
 	const project = data.project;
+	const projects = data.projects;
 
-	console.log('Project data:', project);
+	// console.log('Project data:', project);
+	console.log('Projects data:', projects);
 </script>
 
 <div class="container">
@@ -21,23 +23,22 @@
 	<main class="content">
 		{#if project}
 			<article>
-				{#if project?.thumbnail?.asset?.url}
-					<img src={project?.thumbnail?.asset?.url} alt="Project Thumbnail" />
-				{/if}
-
 				<section>
-					<h2>Gallery</h2>
-					<ul>
-						{#each project?.mediaGallery as item}
-							<li><img src={item?.asset?.url} alt={project.title} /></li>
+					<div class="gallery-rows">
+						{#each project?.galleryRows as row}
+							<div class={`image-row row-${row?.rowLayout}`}>
+								{#each row?.images as img}
+									<img src={img?.asset?.url} alt={project.title} />
+								{/each}
+							</div>
 						{/each}
-					</ul>
+					</div>
 				</section>
 			</article>
 		{:else}
 			<p>Loading…</p>
 		{/if}
-		<ProjectCarousel currentSlug={project?.slug?.current} />
+		<ProjectCarousel {projects} currentSlug={project?.slug?.current} />
 	</main>
 </div>
 
@@ -57,5 +58,73 @@
 	.content {
 		flex: 1;
 		overflow-y: scroll;
+	}
+
+	.content::-webkit-scrollbar-track {
+		background: transparent; /* no track background */
+	}
+
+	.gallery-rows {
+		width: 100%;
+	}
+
+	.gallery-rows .image-row {
+		display: flex;
+		margin-bottom: 1.5rem;
+		align-items: flex-start; /* <-- This ensures top alignment */
+	}
+
+	.gallery-rows .image-row img {
+		height: auto; /* keeps natural aspect ratio */
+		object-fit: contain;
+		display: block;
+	}
+
+	.gallery-column {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		padding: 0;
+		list-style: none;
+	}
+
+	.gallery-column img {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	/* Shared row layout */
+	.image-row {
+		display: flex;
+		justify-content: flex-start;
+		align-items: flex-start;
+		margin-bottom: 1.5rem;
+		padding-bottom: 6rem;
+	}
+
+	/* Layout: row of 3 */
+	.row-three img {
+		width: 33.3333%;
+		flex-shrink: 0;
+	}
+
+	/* Row of 2 — exactly 1/2 each */
+	.row-two img {
+		width: 50%;
+		flex-shrink: 0;
+	}
+
+	/* Row of 1 — full width */
+	.row-one img {
+		width: 100%;
+		flex: 1 1 100%;
+	}
+
+	/* General image styling */
+	.image-row img {
+		display: block;
+		object-fit: contain;
+		height: auto;
 	}
 </style>

@@ -21,12 +21,17 @@ export const singleProjectQuery = groq`
         url
       }
     },
-    mediaGallery[]{
-      _type,
-      asset->{
-        url
+	thumbnail {
+      asset->{ url }
+    },
+	galleryRows[]{
+	  rowLayout,
+      images[]{
+        asset->{
+          url
+        }
       }
-    }
+    },
   }
 `;
 

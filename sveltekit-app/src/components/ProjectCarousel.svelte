@@ -8,16 +8,18 @@
 	let filteredProjects = [];
 
 	onMount(() => {
-		filteredProjects = projects.filter(p => p.slug.current !== currentSlug);
+		filteredProjects = projects.filter((p) => p.slug.current !== currentSlug);
 		// Duplicate projects to simulate infinite scrolling
 		filteredProjects = [...filteredProjects, ...filteredProjects];
 	});
+
+	console.log('Filtered projects:', filteredProjects);
 </script>
 
 <section class="carousel-wrapper">
 	<h2 class="label">More Projects</h2>
 	<div class="carousel-track">
-		{#each filteredProjects as project (project._id)}
+		{#each filteredProjects as project, i (project._id + '-' + i)}
 			<div class="carousel-item" on:click={() => goto(`/${project.slug.current}`)}>
 				{#if project.thumbnail?.asset?.url}
 					<img src={project?.thumbnail?.asset?.url} alt={project.title} />
@@ -37,16 +39,18 @@
 		overflow: hidden;
 		background: white;
 		display: flex;
-		align-items: center;
+		flex-direction: column;
+		align-items: start;
 		padding: 1rem 0;
-		gap: 1rem;
-        height: 235px;
+		/* gap: 1rem; */
+		height: 235px;
 	}
 
 	.label {
 		flex: 0 0 auto;
-		font-size: 1rem;
+		font-size: 0.875rem;
 		padding: 0 1rem;
+		color: #353535;
 	}
 
 	.label.right {
@@ -56,7 +60,6 @@
 	.carousel-track {
 		display: flex;
 		flex: 1 1 auto;
-		gap: 1rem;
 		animation: scrollLeft 40s linear infinite;
 	}
 
@@ -79,16 +82,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		font-size: 0.8rem;
-		color: #666;
-	}
-
-	@keyframes scrollLeft {
-		0% {
-			transform: translateX(0%);
-		}
-		100% {
-			transform: translateX(-50%);
-		}
+		font-size: 0.875rem;
+		color: #353535;
 	}
 </style>
