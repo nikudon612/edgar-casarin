@@ -9,6 +9,27 @@ export default {
     {name: 'thumbnail', type: 'image', title: 'Cover Image or Video Thumbnail'},
     {name: 'thumbnailVideo', type: 'file', title: 'Cover Video (optional)'},
     {
+      name: 'layout',
+      title: 'Project Layout',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Column Layout', value: 'column'},
+          {title: 'Gallery Rows', value: 'rows'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'column',
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'columnImages',
+      title: 'Column Layout Images',
+      type: 'array',
+      of: [{type: 'image'}],
+      hidden: ({parent}) => parent?.layout !== 'column',
+    },
+    {
       name: 'galleryRows',
       title: 'Project Page Rows',
       type: 'array',
@@ -23,13 +44,13 @@ export default {
               type: 'string',
               options: {
                 list: [
-                  {title: '1 Image (Full Width)', value: 'one'},
-                  {title: '2 Images (Split Half)', value: 'two'},
-                  {title: '3 Images (Thirds)', value: 'three'},
+                  {title: '1 Image Row', value: 'one'},
+                  {title: '2 Images Row', value: 'two'},
+                  {title: '3 Images Row', value: 'three'},
                 ],
                 layout: 'radio',
               },
-              initialValue: 'three',
+              initialValue: 'one',
               validation: (Rule) => Rule.required(),
             },
             {
@@ -59,7 +80,7 @@ export default {
           },
         },
       ],
-      // hidden: ({parent}) => parent?.layoutStyle !== 'customRows',
+      hidden: ({parent}) => parent?.layout === 'column', // 👈 hide when in column mode
     },
     {
       name: 'row1Images',
