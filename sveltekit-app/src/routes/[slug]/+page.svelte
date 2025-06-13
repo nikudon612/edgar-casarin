@@ -112,7 +112,7 @@
 
 	/* Row of 2 — exactly 1/2 each */
 	.row-two img {
-		width: 50vw;
+		width: 50%;
 		flex: 1 1 0;
 	}
 
