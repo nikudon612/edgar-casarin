@@ -94,8 +94,4 @@
 		max-width: 100%;
 		height: auto;
 	}
-
-	.loading {
-		/* padding: 2rem; */
-	}
 </style>

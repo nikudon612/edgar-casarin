@@ -44,14 +44,15 @@ export const singleProjectQuery = groq`
       asset->{ url }
     },
 	galleryRows[]{
-	  rowLayout,
-	  disableGap,
+      rowLayout,
+      disableGap,
       images[]{
-        asset->{
-          url
-        }
+        image {
+          asset->{ url }
+        },
+        width
       }
-    },
+    }
   }
 `;
 

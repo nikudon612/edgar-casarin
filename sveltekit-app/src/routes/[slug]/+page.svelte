@@ -39,8 +39,12 @@
 									class={`image-row row-${row?.rowLayout}`}
 									style={row?.disableGap ? 'margin-bottom: 0' : 'margin-bottom: 6rem'}
 								>
-									{#each row?.images as img}
-										<img src={img?.asset?.url} alt={project.title} />
+									{#each row.images ?? [] as item}
+										<img
+											src={item?.image?.asset?.url}
+											alt={project.title}
+											style={`width: ${item?.width || '100%'}`}
+										/>
 									{/each}
 								</div>
 							{/each}
