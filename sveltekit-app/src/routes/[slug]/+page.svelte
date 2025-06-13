@@ -5,8 +5,6 @@
 	const project = data.project;
 
 	console.log('Project data:', project);
-
-	const layout = project?.layoutStyle || 'column';
 </script>
 
 <div class="container">
@@ -60,6 +58,13 @@
 		overflow-y: scroll;
 	}
 
+	.content::-webkit-scrollbar {
+	}
+
+	.content::-webkit-scrollbar-track {
+		background: transparent; /* no track background */
+	}
+
 	.gallery-rows {
 		width: 100%;
 	}
@@ -71,7 +76,6 @@
 	}
 
 	.gallery-rows .image-row img {
-		width: calc((100%) / 3); /* 3 images with 2rem total gap (2 x 1rem) */
 		height: auto; /* keeps natural aspect ratio */
 		object-fit: contain;
 		display: block;
@@ -96,20 +100,32 @@
 		display: flex;
 		justify-content: flex-start;
 		align-items: flex-start;
-		gap: 1rem;
 		margin-bottom: 1.5rem;
+		padding-bottom: 6rem;
 	}
 
-	/* Row-specific image sizing */
+	/* Layout: row of 3 */
+	.row-three img {
+		width: 33.3333%;
+		flex-shrink: 0;
+	}
+
+	/* Row of 2 — exactly 1/2 each */
+	.row-two img {
+		width: 50%;
+		flex-shrink: 0;
+	}
+
+	/* Row of 1 — full width */
 	.row-one img {
 		width: 100%;
+		flex: 1 1 100%;
 	}
 
-	.row-two img {
-		width: calc((100% - 1rem) / 2);
-	}
-
-	.row-three img {
-		width: calc((100% - 2rem) / 3);
+	/* General image styling */
+	.image-row img {
+		display: block;
+		object-fit: contain;
+		height: auto;
 	}
 </style>
