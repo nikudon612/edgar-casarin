@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { useQuery } from '@sanity/svelte-loader';
 	import { PortableText } from '@portabletext/svelte';
+	import { urlFor } from '$lib/sanity/image';
 	import AboutPageMenu from '../../components/AboutPageMenu.svelte';
 
 	export let data;
@@ -8,7 +9,7 @@
 	const q = useQuery(data); // 👈 just like the template
 	$: ({ data: about } = $q); // 👈 destructure reactively
 
-	// console.log('about:', about);
+	console.log('about:', data.options.initial.data);
 </script>
 
 <div class="layout-container">
@@ -21,22 +22,18 @@
 	<main class="content">
 		{#if about}
 			<section class="bio-section">
-				{#if about.headshot?.asset?.url}
-					<img src={about.headshot.asset.url} alt="Headshot" class="headshot" />
-				{/if}
-
 				{#if about.bio}
 					<div class="bio-text">
 						<PortableText value={about?.bio} />
 					</div>
 				{/if}
-
-				<!-- Optional email field -->
-				<!--
-				{#if about.email}
-					<p>Email: <a href={`mailto:${about.email}`}>{about.email}</a></p>
+				{#if about.image?.asset?._ref}
+					<img
+						src={urlFor(about.image).width(800).auto('format').url()}
+						alt="Headshot"
+						class="headshot"
+					/>
 				{/if}
-				-->
 			</section>
 		{:else}
 			<p class="loading">Loading about info...</p>
@@ -66,16 +63,17 @@
 	}
 
 	.bio-section {
-		/* margin: 0 auto; */
+		display: flex;
+		flex-direction: column;
 		padding: 0 0.5rem; /* ✅ top and bottom padding removed */
 		height: 100%;
 	}
 	.bio-text {
+		display: block;
 		font-size: 6rem;
 		line-height: 109.00000000000001%;
 		/* letter-spacing: -1%; */
 		width: 100%;
-		height: 100%;
 	}
 	:global(.bio-text p) {
 		margin-block-start: 0em;
@@ -95,8 +93,6 @@
 	.headshot {
 		max-width: 100%;
 		height: auto;
-		border-radius: 4px;
-		margin-bottom: 1rem;
 	}
 
 	.loading {
