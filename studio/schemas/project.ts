@@ -3,15 +3,79 @@ export default {
   name: 'project',
   type: 'document',
   title: 'Project',
+  fieldsets: [
+    {name: 'general', title: '📝 General Info', options: {collapsible: true, collapsed: false}},
+    {name: 'homepage', title: '🏠 Homepage Layout', options: {collapsible: true, collapsed: true}},
+    {
+      name: 'projectPage',
+      title: '📄 Project Page Layout',
+      options: {collapsible: true, collapsed: true},
+    },
+  ],
   fields: [
-    {name: 'title', type: 'string'},
-    {name: 'slug', type: 'slug', options: {source: 'title', maxLength: 96}},
-    {name: 'thumbnail', type: 'image', title: 'Cover Image or Video Thumbnail'},
-    {name: 'thumbnailVideo', type: 'file', title: 'Cover Video (optional)'},
+    {name: 'title', type: 'string', fieldset: 'general'},
+    {name: 'slug', type: 'slug', options: {source: 'title', maxLength: 96}, fieldset: 'general'},
+    {name: 'thumbnail', type: 'image', title: 'Image or Video Thumbnail', fieldset: 'general'},
+    {name: 'description', type: 'text', fieldset: 'general'},
+    {name: 'date', type: 'datetime', fieldset: 'general'},
+
+    {
+      name: 'homepageSections',
+      title: 'Homepage Row Settings',
+      type: 'object',
+      fieldset: 'homepage',
+      fields: [
+        {
+          name: 'showRow1',
+          type: 'boolean',
+          title: 'Enable Top Homepage Row',
+          initialValue: false,
+        },
+        {
+          name: 'showRow2',
+          type: 'boolean',
+          title: 'Enable Bottom Homepage Row',
+          initialValue: false,
+        },
+      ],
+    },
+    {
+      name: 'row1Images',
+      type: 'array',
+      title: 'Homepage Top Row',
+      fieldset: 'homepage',
+      hidden: ({parent}) => !parent?.homepageSections?.showRow1,
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {name: 'image', type: 'image', title: 'Image'},
+            {name: 'order', type: 'number', title: 'Order'},
+          ],
+        },
+      ],
+    },
+    {
+      name: 'row2Images',
+      type: 'array',
+      title: 'Homepage Bottom Row',
+      fieldset: 'homepage',
+      hidden: ({parent}) => !parent?.homepageSections?.showRow2,
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {name: 'image', type: 'image', title: 'Image'},
+            {name: 'order', type: 'number', title: 'Order'},
+          ],
+        },
+      ],
+    },
     {
       name: 'layout',
       title: 'Project Layout',
       type: 'string',
+      fieldset: 'projectPage',
       options: {
         list: [
           {title: 'Column Layout', value: 'column'},
@@ -26,6 +90,7 @@ export default {
       name: 'columnImages',
       title: 'Column Layout Images',
       type: 'array',
+      fieldset: 'projectPage',
       of: [{type: 'image'}],
       hidden: ({parent}) => parent?.layout !== 'column',
     },
@@ -33,6 +98,7 @@ export default {
       name: 'galleryRows',
       title: 'Project Page Rows',
       type: 'array',
+      fieldset: 'projectPage',
       of: [
         {
           type: 'object',
@@ -82,36 +148,5 @@ export default {
       ],
       hidden: ({parent}) => parent?.layout === 'column', // 👈 hide when in column mode
     },
-    {
-      name: 'row1Images',
-      type: 'array',
-      title: 'Homepage Top Row',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            {name: 'image', type: 'image', title: 'Image'},
-            {name: 'order', type: 'number', title: 'Order'},
-          ],
-        },
-      ],
-    },
-    {
-      name: 'row2Images',
-      type: 'array',
-      title: 'Homepage Bottom Row',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            {name: 'image', type: 'image', title: 'Image'},
-            {name: 'order', type: 'number', title: 'Order'},
-          ],
-        },
-      ],
-    },
-    {name: 'description', type: 'text'},
-
-    {name: 'date', type: 'datetime'},
   ],
 }
