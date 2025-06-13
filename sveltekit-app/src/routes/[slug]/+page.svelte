@@ -63,7 +63,7 @@
 	}
 
 	.menu {
-		width: 340px;
+		width: 320px;
 		flex-shrink: 0;
 		background: white;
 	}
