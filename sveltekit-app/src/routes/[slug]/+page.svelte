@@ -6,7 +6,7 @@
 	const projects = data.projects;
 
 	// console.log('Project data:', project);
-	console.log('Projects data:', projects);
+	// console.log('Projects data:', projects);
 </script>
 
 <div class="container">
