@@ -10,7 +10,7 @@
 	const q = useQuery(data);
 
 	$: ({ data: projects } = $q);
-	$: console.log('homepage projects:', projects);
+	// $: console.log('homepage projects:', projects);
 
 	// Helper to get the lowest order value from an array of images
 	function getMinOrder(images) {

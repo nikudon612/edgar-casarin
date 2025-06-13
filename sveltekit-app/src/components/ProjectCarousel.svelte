@@ -23,7 +23,7 @@
 		});
 
 		filteredProjects = [...filteredProjects]; // duplicate for scrolling
-		console.log('→ Filtered projects:', filteredProjects);
+		// console.log('→ Filtered projects:', filteredProjects);
 	}
 
 	let hoveredProjectTitle: string = '';
@@ -95,6 +95,10 @@
 		align-items: center;
 		justify-content: center;
 		max-height: 213px;
+	}
+
+	.carousel-item:hover {
+		cursor: pointer;
 	}
 
 	.carousel-item img {
