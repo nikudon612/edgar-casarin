@@ -24,7 +24,6 @@ export const singleProjectQuery = groq`
 	thumbnail {
       asset->{ url }
     },
-	layoutStyle,
 	galleryRows[]{
       images[]{
         asset->{
@@ -32,12 +31,6 @@ export const singleProjectQuery = groq`
         }
       }
     },
-    mediaGallery[]{
-      _type,
-      asset->{
-        url
-      }
-    }
   }
 `;
 

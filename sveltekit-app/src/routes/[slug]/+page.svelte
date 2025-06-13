@@ -28,11 +28,10 @@
 				{/if} -->
 
 				<section>
-					{#if layout === 'threeRow'}
-						<!-- Custom 3-image-per-row layout -->
+					{#if layout === 'customRows'}
 						<div class="gallery-rows">
 							{#each project?.galleryRows as row}
-								<div class="image-row">
+								<div class={`image-row row-${row?.rowLayout}`}>
 									{#each row?.images as img}
 										<img src={img?.asset?.url} alt={project.title} />
 									{/each}
@@ -40,12 +39,8 @@
 							{/each}
 						</div>
 					{:else}
-						<!-- Column layout -->
-						<ul class="gallery-column">
-							{#each project?.mediaGallery as item}
-								<li><img src={item?.asset?.url} alt={project.title} /></li>
-							{/each}
-						</ul>
+						<!-- Column fallback layout -->
+						<p>loading...</p>
 					{/if}
 				</section>
 			</article>

@@ -9,50 +9,8 @@ export default {
     {name: 'thumbnail', type: 'image', title: 'Cover Image or Video Thumbnail'},
     {name: 'thumbnailVideo', type: 'file', title: 'Cover Video (optional)'},
     {
-      name: 'layoutStyle',
-      title: 'Project Page Layout',
-      type: 'string',
-      options: {
-        list: [
-          {title: 'Column (Single Vertical Stack)', value: 'column'},
-          {title: 'Row  of 2 (2 Images per Row)', value: 'twoRow'},
-          {title: 'Rows of 3 (Grid)', value: 'threeRow'},
-        ],
-        layout: 'radio', // or 'dropdown' if preferred
-      },
-      initialValue: 'column',
-    },
-    {
-      name: 'mediaGallery',
-      type: 'array',
-      title: 'Project Page Gallery',
-      of: [{type: 'image'}, {type: 'file'}],
-      hidden: ({parent}) => parent?.layoutStyle !== 'column',
-    },
-    {
-      name: 'twoRowGallery',
-      title: 'Two Row Layout',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          title: 'Image Row (Max 2)',
-          fields: [
-            {
-              name: 'images',
-              title: 'Images in this Row',
-              type: 'array',
-              of: [{type: 'image'}],
-              validation: (Rule) => Rule.max(2).error('Only up to 2 images are allowed per row.'),
-            },
-          ],
-        },
-      ],
-      hidden: ({parent}) => parent?.layoutStyle !== 'twoRow',
-    },
-    {
       name: 'galleryRows',
-      title: 'Project Page Rows (Max 3 images per row)',
+      title: 'Project Page Rows',
       type: 'array',
       of: [
         {
@@ -60,16 +18,48 @@ export default {
           title: 'Image Row',
           fields: [
             {
+              name: 'rowLayout',
+              title: 'Row Layout Type',
+              type: 'string',
+              options: {
+                list: [
+                  {title: '1 Image (Full Width)', value: 'one'},
+                  {title: '2 Images (Split Half)', value: 'two'},
+                  {title: '3 Images (Thirds)', value: 'three'},
+                ],
+                layout: 'radio',
+              },
+              initialValue: 'three',
+              validation: (Rule) => Rule.required(),
+            },
+            {
               name: 'images',
-              title: 'Images in this Row',
+              title: 'Images in This Row',
               type: 'array',
               of: [{type: 'image'}],
-              validation: (Rule) => Rule.max(3).error('Only up to 3 images are allowed per row.'),
+              validation: (Rule) => Rule.max(3).error('Maximum of 3 images per row.'),
             },
           ],
+          preview: {
+            select: {
+              layout: 'rowLayout',
+              imageCount: 'images.length',
+            },
+            prepare({layout, imageCount}) {
+              const titleMap = {
+                one: '1 Image Row',
+                two: '2 Images Row',
+                three: '3 Images Row',
+              }
+              return {
+                title: titleMap[layout] || 'Image Row',
+                subtitle: `${imageCount || 0} image${imageCount === 1 ? '' : 's'}`,
+              }
+            },
+          },
         },
       ],
-      hidden: ({parent}) => parent?.layoutStyle === 'column',
+      // hidden: ({parent}) => parent?.layoutStyle !== 'customRows',
     },
     {
       name: 'row1Images',
