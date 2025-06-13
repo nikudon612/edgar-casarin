@@ -3,8 +3,10 @@
 	import ProjectCarousel from '../../components/ProjectCarousel.svelte';
 	export let data;
 	const project = data.project;
+	const projects = data.projects;
 
-	console.log('Project data:', project);
+	// console.log('Project data:', project);
+	console.log('Projects data:', projects);
 </script>
 
 <div class="container">
@@ -36,7 +38,7 @@
 		{:else}
 			<p>Loading…</p>
 		{/if}
-		<ProjectCarousel currentSlug={project?.slug?.current} />
+		<ProjectCarousel {projects} currentSlug={project?.slug?.current} />
 	</main>
 </div>
 
@@ -56,9 +58,6 @@
 	.content {
 		flex: 1;
 		overflow-y: scroll;
-	}
-
-	.content::-webkit-scrollbar {
 	}
 
 	.content::-webkit-scrollbar-track {
