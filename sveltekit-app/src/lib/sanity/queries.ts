@@ -45,6 +45,7 @@ export const singleProjectQuery = groq`
     },
 	galleryRows[]{
 	  rowLayout,
+	  disableGap,
       images[]{
         asset->{
           url

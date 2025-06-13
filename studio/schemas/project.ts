@@ -126,6 +126,12 @@ export default {
               of: [{type: 'image'}],
               validation: (Rule) => Rule.max(3).error('Maximum of 3 images per row.'),
             },
+            {
+              name: 'disableGap',
+              title: 'Disable Gap Below This Row',
+              type: 'boolean',
+              initialValue: false,
+            },
           ],
           preview: {
             select: {
