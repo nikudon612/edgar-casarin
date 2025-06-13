@@ -11,19 +11,25 @@
 
 	let filteredProjects = [];
 
-	// ✅ Use reactive block instead of onMount
+	function shuffleArray<T>(array: T[]): T[] {
+		const arr = [...array];
+		for (let i = arr.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[arr[i], arr[j]] = [arr[j], arr[i]];
+		}
+		return arr;
+	}
+
 	$: if (projects?.length && currentSlug) {
 		const normalizedCurrentSlug = currentSlug.trim();
 
-		filteredProjects = projects.filter((p) => {
+		const remaining = projects.filter((p) => {
 			const projectSlug = p.slug?.current?.trim();
-			const keep = projectSlug && projectSlug !== normalizedCurrentSlug;
-			// console.log(`Comparing: "${projectSlug}" !== "${normalizedCurrentSlug}" → ${keep}`);
-			return keep;
+			return projectSlug && projectSlug !== normalizedCurrentSlug;
 		});
 
-		filteredProjects = [...filteredProjects]; // duplicate for scrolling
-		// console.log('→ Filtered projects:', filteredProjects);
+		filteredProjects = shuffleArray(remaining); // 👈 shuffle before duplicating
+		filteredProjects = [...filteredProjects]; // duplicate for seamless scroll, if needed
 	}
 
 	let hoveredProjectTitle: string = '';

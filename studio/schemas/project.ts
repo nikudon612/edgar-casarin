@@ -123,8 +123,37 @@ export default {
               name: 'images',
               title: 'Images in This Row',
               type: 'array',
-              of: [{type: 'image'}],
+              of: [
+                {
+                  type: 'object',
+                  fields: [
+                    {name: 'image', type: 'image', title: 'Image'},
+                    {
+                      name: 'width',
+                      type: 'string',
+                      title: 'Image Width (%)',
+                      options: {
+                        list: [
+                          {title: 'Full (100%)', value: '100%'},
+                          {title: 'Two Thirds (66%)', value: '66.66%'},
+                          {title: 'Half (50%)', value: '50%'},
+                          {title: 'One Third (33%)', value: '33.33%'},
+                          {title: 'One Quarter (25%)', value: '25%'},
+                        ],
+                        layout: 'radio',
+                      },
+                      initialValue: '100%',
+                    },
+                  ],
+                },
+              ],
               validation: (Rule) => Rule.max(3).error('Maximum of 3 images per row.'),
+            },
+            {
+              name: 'disableGap',
+              title: 'Disable Gap Below This Row',
+              type: 'boolean',
+              initialValue: false,
             },
           ],
           preview: {

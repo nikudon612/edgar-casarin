@@ -27,17 +27,24 @@
 					{#if project.columnImages?.length}
 						<!-- COLUMN LAYOUT -->
 						<div class="gallery-column">
-							{#each project.columnImages as img}
+							{#each project.columnImages ?? [] as img}
 								<img src={img?.asset?.url} alt={project.title} />
 							{/each}
 						</div>
 					{:else if project.galleryRows?.length}
 						<!-- ROWS LAYOUT -->
 						<div class="gallery-rows">
-							{#each project.galleryRows as row}
-								<div class={`image-row row-${row?.rowLayout}`}>
-									{#each row?.images as img}
-										<img src={img?.asset?.url} alt={project.title} />
+							{#each project.galleryRows ?? [] as row}
+								<div
+									class={`image-row row-${row?.rowLayout}`}
+									style={row?.disableGap ? 'margin-bottom: 0' : 'margin-bottom: 6rem'}
+								>
+									{#each row.images ?? [] as item}
+										<img
+											src={item?.image?.asset?.url}
+											alt={project.title}
+											style={`width: ${item?.width || '100%'}`}
+										/>
 									{/each}
 								</div>
 							{/each}
@@ -83,7 +90,7 @@
 
 	.gallery-rows {
 		width: 100%;
-		gap: 6rem;
+		/* gap: 6rem; */
 		display: flex;
 		flex-direction: column;
 	}
