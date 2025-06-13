@@ -13,12 +13,6 @@
 
 	// ✅ Use reactive block instead of onMount
 	$: if (projects?.length && currentSlug) {
-		// console.log('→ currentSlug:', currentSlug);
-		// console.log(
-		// 	'→ available slugs:',
-		// 	projects.map((p) => p.slug?.current)
-		// );
-
 		const normalizedCurrentSlug = currentSlug.trim();
 
 		filteredProjects = projects.filter((p) => {
@@ -32,31 +26,22 @@
 		console.log('→ Filtered projects:', filteredProjects);
 	}
 
-	// $: {
-	// 	console.log('Checking currentSlug:', currentSlug);
-	// 	projects?.forEach((p) => {
-	// 		console.log(
-	// 			'Comparing:',
-	// 			p.slug.current,
-	// 			'===',
-	// 			currentSlug,
-	// 			'->',
-	// 			p.slug.current === currentSlug
-	// 		);
-	// 	});
-	// }
-
-	// console.log('Filtered projects:', filteredProjects);
+	let hoveredProjectTitle: string = '';
 </script>
 
 <div class="label-wrapper">
 	<h2 class="label">More Projects</h2>
-	<h2 class="label right">Project Name</h2>
+	<h2 class="label right">{hoveredProjectTitle || ''}</h2>
 </div>
 <section class="carousel-wrapper">
 	<div class="carousel-track">
 		{#each filteredProjects as project, i (project._id + '-' + i)}
-			<a class="carousel-item" href={`/${project.slug.current}`}>
+			<a
+				class="carousel-item"
+				href={`/${project.slug.current}`}
+				on:mouseenter={() => (hoveredProjectTitle = project.title)}
+				on:mouseleave={() => (hoveredProjectTitle = '')}
+			>
 				{#if project.thumbnail?.asset?._ref}
 					<img
 						src={urlFor(project.thumbnail).width(320).auto('format').url()}

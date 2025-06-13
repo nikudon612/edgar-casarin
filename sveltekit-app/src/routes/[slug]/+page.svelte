@@ -101,6 +101,7 @@
 		align-items: flex-start;
 		margin-bottom: 1.5rem;
 		padding-bottom: 6rem;
+		/* max-width: 100vw; */
 	}
 
 	/* Layout: row of 3 */
@@ -111,14 +112,14 @@
 
 	/* Row of 2 — exactly 1/2 each */
 	.row-two img {
-		width: 50%;
-		flex-shrink: 0;
+		width: 50vw;
+		flex: 1 1 0;
 	}
 
 	/* Row of 1 — full width */
 	.row-one img {
 		width: 100%;
-		flex: 1 1 100%;
+		display: block;
 	}
 
 	/* General image styling */
