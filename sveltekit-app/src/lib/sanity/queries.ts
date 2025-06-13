@@ -24,6 +24,25 @@ export const singleProjectQuery = groq`
 	thumbnail {
       asset->{ url }
     },
+	row1Images[]{
+	  rowLayout,
+	  images[]{
+		asset->{
+		  url
+		}
+	  }
+	},
+	row2Images[]{
+	  rowLayout,
+	  images[]{
+		asset->{
+		  url
+		}
+	  }
+	},
+	columnImages[]{ // <-- new column images array
+      asset->{ url }
+    },
 	galleryRows[]{
 	  rowLayout,
       images[]{

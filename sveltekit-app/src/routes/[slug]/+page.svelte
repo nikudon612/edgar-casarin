@@ -5,7 +5,7 @@
 	const project = data.project;
 	const projects = data.projects;
 
-	// console.log('Project data:', project);
+	console.log('Project data:', project);
 	// console.log('Projects data:', projects);
 </script>
 
@@ -24,15 +24,28 @@
 		{#if project}
 			<article>
 				<section>
-					<div class="gallery-rows">
-						{#each project?.galleryRows as row}
-							<div class={`image-row row-${row?.rowLayout}`}>
-								{#each row?.images as img}
-									<img src={img?.asset?.url} alt={project.title} />
-								{/each}
-							</div>
-						{/each}
-					</div>
+					{#if project.columnImages?.length}
+						<!-- COLUMN LAYOUT -->
+						<div class="gallery-column">
+							{#each project.columnImages as img}
+								<img src={img?.asset?.url} alt={project.title} />
+							{/each}
+						</div>
+					{:else if project.galleryRows?.length}
+						<!-- ROWS LAYOUT -->
+						<div class="gallery-rows">
+							{#each project.galleryRows as row}
+								<div class={`image-row row-${row?.rowLayout}`}>
+									{#each row?.images as img}
+										<img src={img?.asset?.url} alt={project.title} />
+									{/each}
+								</div>
+							{/each}
+						</div>
+					{:else}
+						<!-- No layout defined yet -->
+						<p>Project layout coming soon…</p>
+					{/if}
 				</section>
 			</article>
 		{:else}
