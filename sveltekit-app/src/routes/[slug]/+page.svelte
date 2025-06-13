@@ -23,25 +23,16 @@
 	<main class="content">
 		{#if project}
 			<article>
-				<!-- {#if project?.thumbnail?.asset?.url}
-					<img src={project?.thumbnail?.asset?.url} alt="Project Thumbnail" />
-				{/if} -->
-
 				<section>
-					{#if layout === 'customRows'}
-						<div class="gallery-rows">
-							{#each project?.galleryRows as row}
-								<div class={`image-row row-${row?.rowLayout}`}>
-									{#each row?.images as img}
-										<img src={img?.asset?.url} alt={project.title} />
-									{/each}
-								</div>
-							{/each}
-						</div>
-					{:else}
-						<!-- Column fallback layout -->
-						<p>loading...</p>
-					{/if}
+					<div class="gallery-rows">
+						{#each project?.galleryRows as row}
+							<div class={`image-row row-${row?.rowLayout}`}>
+								{#each row?.images as img}
+									<img src={img?.asset?.url} alt={project.title} />
+								{/each}
+							</div>
+						{/each}
+					</div>
 				</section>
 			</article>
 		{:else}
@@ -98,5 +89,27 @@
 		width: 100%;
 		height: auto;
 		display: block;
+	}
+
+	/* Shared row layout */
+	.image-row {
+		display: flex;
+		justify-content: flex-start;
+		align-items: flex-start;
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+	}
+
+	/* Row-specific image sizing */
+	.row-one img {
+		width: 100%;
+	}
+
+	.row-two img {
+		width: calc((100% - 1rem) / 2);
+	}
+
+	.row-three img {
+		width: calc((100% - 2rem) / 3);
 	}
 </style>
