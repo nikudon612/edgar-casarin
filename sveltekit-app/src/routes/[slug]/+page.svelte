@@ -70,7 +70,7 @@
 	}
 
 	.project {
-		margin-bottom: 18rem;
+		margin-bottom: 35rem;
 	}
 
 	.menu {
@@ -82,6 +82,7 @@
 	.content {
 		flex: 1;
 		overflow-y: scroll;
+		background-color: #f7f7f5 !important;
 	}
 
 	.content::-webkit-scrollbar-track {

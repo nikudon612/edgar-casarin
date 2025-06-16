@@ -36,8 +36,8 @@
 </script>
 
 <div class="label-wrapper">
-	<h2 class="label">More Projects</h2>
-	<h2 class="label right">{hoveredProjectTitle || ''}</h2>
+	<p class="label">More Projects</p>
+	<p class="label right">{hoveredProjectTitle || ''}</p>
 </div>
 <section class="carousel-wrapper">
 	<div class="carousel-track">
@@ -66,7 +66,7 @@
 		position: relative;
 		width: 100%;
 		overflow-x: auto;
-		background: white;
+		background-color: white !important;
 		display: flex;
 		flex-direction: column;
 		align-items: start;
@@ -77,11 +77,17 @@
 		display: flex;
 		width: 100%;
 		align-items: start;
+		justify-items: baseline;
+		background-color: white !important;
+		height: 3vh;
 	}
 	.label {
 		flex: 0 0 auto;
 		font-size: 0.875rem;
 		color: #353535;
+		margin: 0;
+		margin-top: 0.5rem;
+
 	}
 
 	.label.right {
