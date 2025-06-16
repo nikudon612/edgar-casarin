@@ -70,7 +70,7 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		height: 3vh;
+		height: 1.5vh;
 		padding: 0 1rem;
 	}
 
