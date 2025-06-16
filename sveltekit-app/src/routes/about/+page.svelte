@@ -59,20 +59,19 @@
 		flex: 1;
 		overflow-y: scroll;
 		background-color: #f7f7f5;
-		padding: 0; /* ✅ remove top padding if any */
+		padding: 0;
 	}
 
 	.bio-section {
 		display: flex;
 		flex-direction: column;
-		padding: 0 0.5rem; /* ✅ top and bottom padding removed */
+		padding: 0 0.5rem;
 		height: 100%;
 	}
 	.bio-text {
 		display: block;
 		font-size: 6rem;
 		line-height: 109.00000000000001%;
-		/* letter-spacing: -1%; */
 		width: 100%;
 	}
 	:global(.bio-text p) {

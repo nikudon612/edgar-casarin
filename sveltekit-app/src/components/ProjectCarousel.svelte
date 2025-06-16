@@ -66,7 +66,7 @@
 		position: relative;
 		width: 100%;
 		overflow-x: auto;
-		background: white;
+		background-color: white !important;
 		display: flex;
 		flex-direction: column;
 		align-items: start;
@@ -77,6 +77,7 @@
 		display: flex;
 		width: 100%;
 		align-items: start;
+		background-color: white !important;
 	}
 	.label {
 		flex: 0 0 auto;
