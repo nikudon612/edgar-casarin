@@ -11,6 +11,27 @@
 	$: ({ data: post } = $q);
 </script>
 
+<svelte:head>
+	<title>{post.title}</title>
+	<meta name="description" content={post.excerpt} />
+
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content={post.title} />
+	<meta property="og:description" content={post.excerpt} />
+	{#if post.mainImage}
+		<meta property="og:image" content={urlFor(post.mainImage).width(1200).height(630).url()} />
+	{/if}
+
+	<!-- Twitter -->
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={post.title} />
+	<meta name="twitter:description" content={post.excerpt} />
+	{#if post.mainImage}
+		<meta name="twitter:image" content={urlFor(post.mainImage).width(1200).height(630).url()} />
+	{/if}
+</svelte:head>
+
 <section class="post">
 	{#if post.mainImage}
 		<img
