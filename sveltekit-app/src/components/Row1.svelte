@@ -1,10 +1,14 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import ProjectCard from './projectCard.svelte';
 	import type { Project } from '$lib/sanity/queries';
 
 	export let projects: Project[];
 
-	// Flatten all images across all projects
+	let scrollRef: HTMLDivElement;
+	let observer: () => void;
+
+	// Flatten and sort
 	$: flatImages = projects
 		.flatMap((proj) =>
 			(proj.row1Images ?? []).map((imgObj) => ({
@@ -14,43 +18,70 @@
 			}))
 		)
 		.sort((a, b) => a.order - b.order);
+
+	// Helper to jump scroll position
+	const resetScrollIfNeeded = () => {
+		const el = scrollRef;
+		const scrollWidth = el.scrollWidth;
+		const third = scrollWidth / 3;
+
+		if (el.scrollLeft < third * 0.5) {
+			el.scrollLeft += third;
+		}
+		if (el.scrollLeft > third * 1.5) {
+			el.scrollLeft -= third;
+		}
+	};
+
+	onMount(() => {
+		// Start at center
+		scrollRef.scrollLeft = scrollRef.scrollWidth / 3;
+
+		const handleScroll = () => {
+			resetScrollIfNeeded();
+		};
+
+		scrollRef.addEventListener('scroll', handleScroll);
+
+		// Clean up
+		return () => {
+			scrollRef.removeEventListener('scroll', handleScroll);
+		};
+	});
 </script>
 
-<div class="scroll-wrapper">
-	<div class="row row-1">
-		{#each flatImages as item, i (item.proj._id + '-' + i)}
-			<ProjectCard proj={item.proj} row="row1" image={item.image} />
-		{/each}
-		{#each flatImages as item, i (item.proj._id + '-copy-' + i)}
-			<ProjectCard proj={item.proj} row="row1" image={item.image} />
-		{/each}
-	</div>
+<div class="scroll-wrapper" bind:this={scrollRef}>
+	<!-- Copy A -->
+	{#each flatImages as item, i (item.proj._id + '-a-' + i)}
+		<ProjectCard proj={item.proj} row="row1" image={item.image} />
+	{/each}
+
+	<!-- Copy B (center) -->
+	{#each flatImages as item, i (item.proj._id + '-b-' + i)}
+		<ProjectCard proj={item.proj} row="row1" image={item.image} />
+	{/each}
+
+	<!-- Copy C -->
+	{#each flatImages as item, i (item.proj._id + '-c-' + i)}
+		<ProjectCard proj={item.proj} row="row1" image={item.image} />
+	{/each}
 </div>
 
 <style>
 	.scroll-wrapper {
-		overflow: hidden;
-		width: 100vw;
-		position: relative;
-	}
-
-	.row-1 {
 		display: flex;
-		flex-direction: row;
+		overflow-x: scroll;
+		scroll-behavior: auto;
+		width: 100vw;
 		height: 48.5vh;
-		animation: scroll-left 45s linear infinite;
-		will-change: transform;
-
-		/* ✅ Ensures the container grows to fit both original and duplicate sets */
-		width: max-content;
+		scrollbar-width: none;
+	}
+	.scroll-wrapper::-webkit-scrollbar {
+		display: none;
 	}
 
-	@keyframes scroll-left {
-		from {
-			transform: translateX(0);
-		}
-		to {
-			transform: translateX(-50%);
-		}
+	:global(.project-card) {
+		flex: 0 0 auto;
+		min-width: 300px; /* or whatever fixed/card size you use */
 	}
 </style>
