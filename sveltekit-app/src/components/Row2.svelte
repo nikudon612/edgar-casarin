@@ -16,7 +16,7 @@
 </script>
 
 <div class="scroll-wrapper">
-	<div class="row row-1">
+	<div class="row row-2">
 		{#each flatImages as item, i (item.proj._id + '-' + i)}
 			<ProjectCard proj={item.proj} row="row2" image={item.image} />
 		{/each}
@@ -33,15 +33,18 @@
 		position: relative;
 	}
 
-	.row-1 {
+	.row-2 {
 		display: flex;
 		flex-direction: row;
-		height: 49.25vh;
-		animation: scroll-left 20s linear infinite;
+		height: 48.5vh;
+		animation: scroll-right 45s linear infinite;
 		will-change: transform;
+
+		/* ✅ Ensures content can scroll seamlessly */
+		width: max-content;
 	}
 
-	@keyframes scroll-left {
+	@keyframes scroll-right {
 		from {
 			transform: translateX(-50%);
 		}

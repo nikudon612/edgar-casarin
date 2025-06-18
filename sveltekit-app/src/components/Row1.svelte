@@ -37,9 +37,12 @@
 	.row-1 {
 		display: flex;
 		flex-direction: row;
-		height: 49.25vh;
-		animation: scroll-left 20s linear infinite;
+		height: 48.5vh;
+		animation: scroll-left 45s linear infinite;
 		will-change: transform;
+
+		/* ✅ Ensures the container grows to fit both original and duplicate sets */
+		width: max-content;
 	}
 
 	@keyframes scroll-left {
