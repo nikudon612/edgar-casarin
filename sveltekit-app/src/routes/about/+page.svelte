@@ -29,11 +29,7 @@
 	<meta property="og:url" content="https://edgarcasarin.com/about" />
 	<meta
 		property="og:image"
-		content={about?.image)
-			.width(1200)
-			.height(630)
-			.auto('format')
-			.url()}
+		content={urlFor(about?.image).width(1200).height(630).auto('format').url()}
 	/>
 
 	<!-- Twitter Card -->
@@ -45,11 +41,7 @@
 	/>
 	<meta
 		name="twitter:image"
-		content={urlFor(about?.image)
-			.width(1200)
-			.height(630)
-			.auto('format')
-			.url()}
+		content={urlFor(about?.image).width(1200).height(630).auto('format').url()}
 	/>
 </svelte:head>
 
