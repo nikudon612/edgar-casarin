@@ -9,6 +9,28 @@
 	// console.log('Projects data:', projects);
 </script>
 
+<svelte:head>
+	<title>{project?.title}</title>
+	<meta name="description" content={project?.description || 'View project details'} />
+
+	<!-- Open Graph -->
+	<meta property="og:title" content={project?.title} />
+	<meta property="og:description" content={project?.description || 'View project details'} />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content={`https://edgarcasarin.com/${project?.slug?.current}`} />
+	{#if project?.thumbnail?.asset?.url}
+		<meta property="og:image" content={project.thumbnail.asset.url} />
+	{/if}
+
+	<!-- Twitter -->
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={project?.title} />
+	<meta name="twitter:description" content={project?.description || 'View project details'} />
+	{#if project?.thumbnail?.asset?.url}
+		<meta name="twitter:image" content={project.thumbnail.asset.url} />
+	{/if}
+</svelte:head>
+
 <div class="container">
 	<!-- Sidebar menu -->
 	<aside class="menu">
