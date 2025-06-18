@@ -37,7 +37,32 @@
 	// $: console.log('row2Projects:', row2Projects);
 </script>
 
-<title> Edgar Casarin - Design Services </title>
+<svelte:head>
+	<title>Edgar Casarin – Design Services</title>
+	<meta
+		name="description"
+		content="Creative direction, visual design, and motion for artists, brands, and cultural institutions."
+	/>
+
+	<!-- Open Graph -->
+	<meta property="og:title" content="Edgar Casarin – Design Services" />
+	<meta
+		property="og:description"
+		content="Creative direction, visual design, and motion for artists, brands, and cultural institutions."
+	/>
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://edgarcasarin.com" />
+	<meta property="og:image" content="https://cdn.sanity.io/images/.../homepage-share.jpg" />
+
+	<!-- Twitter Card -->
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="Edgar Casarin – Design Services" />
+	<meta
+		name="twitter:description"
+		content="Creative direction, visual design, and motion for artists, brands, and cultural institutions."
+	/>
+	<meta name="twitter:image" content="https://cdn.sanity.io/images/.../homepage-share.jpg" />
+</svelte:head>
 
 <section>
 	{#if projects.length}
