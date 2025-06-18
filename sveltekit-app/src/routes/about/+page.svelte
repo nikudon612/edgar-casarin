@@ -12,6 +12,47 @@
 	console.log('about:', data.options.initial.data);
 </script>
 
+<svelte:head>
+	<title>{about?.metaTitle ?? 'About – Edgar Casarin'}</title>
+	<meta
+		name="description"
+		content={about?.metaDescription ?? 'Learn more about Edgar Casarin and his creative work.'}
+	/>
+
+	<!-- Open Graph -->
+	<meta property="og:title" content={'About – Edgar Casarin'} />
+	<meta
+		property="og:description"
+		content={'Learn more about Edgar Casarin and his creative work.'}
+	/>
+	<meta property="og:type" content="profile" />
+	<meta property="og:url" content="https://edgarcasarin.com/about" />
+	<meta
+		property="og:image"
+		content={about?.image)
+			.width(1200)
+			.height(630)
+			.auto('format')
+			.url()}
+	/>
+
+	<!-- Twitter Card -->
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={'About – Edgar Casarin'} />
+	<meta
+		name="twitter:description"
+		content={'Learn more about Edgar Casarin and his creative work.'}
+	/>
+	<meta
+		name="twitter:image"
+		content={urlFor(about?.image)
+			.width(1200)
+			.height(630)
+			.auto('format')
+			.url()}
+	/>
+</svelte:head>
+
 <div class="layout-container">
 	<!-- Left menu -->
 	<aside class="menu">
