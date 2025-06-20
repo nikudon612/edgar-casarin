@@ -2,15 +2,17 @@
 	import { useQuery } from '@sanity/svelte-loader';
 	import Row1 from '../components/Row1.svelte';
 	import Row2 from '../components/Row2.svelte';
-	import Welcome from '../components/Welcome.svelte';
 	import type { PageData } from './$types';
 	import { hoveredProjectName } from '../lib/stores';
+	import { urlFor } from '$lib/sanity/image';
 
 	export let data: PageData;
 	const q = useQuery(data);
 
-	$: ({ data: projects } = $q);
+	$: ({ data } = $q);
+	$: ({ projects, about } = data ?? {});
 	// $: console.log('homepage projects:', projects);
+	// $: console.log('about:', about);
 
 	// Helper to get the lowest order value from an array of images
 	function getMinOrder(images) {
@@ -52,7 +54,13 @@
 	/>
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="https://edgarcasarin.com" />
-	<meta property="og:image" content="https://cdn.sanity.io/images/.../homepage-share.jpg" />
+
+	{#if about?.image?.asset?._ref}
+		<meta
+			property="og:image"
+			content={urlFor(about.image).width(1200).height(630).auto('format').url()}
+		/>
+	{/if}
 
 	<!-- Twitter Card -->
 	<meta name="twitter:card" content="summary_large_image" />
@@ -61,7 +69,12 @@
 		name="twitter:description"
 		content="Creative direction, visual design, and motion for artists, brands, and cultural institutions."
 	/>
-	<meta name="twitter:image" content="https://cdn.sanity.io/images/.../homepage-share.jpg" />
+	{#if about?.image?.asset?._ref}
+		<meta
+			name="twitter:image"
+			content={urlFor(about.image).width(1200).height(630).auto('format').url()}
+		/>
+	{/if}
 </svelte:head>
 
 <section>
