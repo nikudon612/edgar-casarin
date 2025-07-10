@@ -32,7 +32,7 @@
         
 	}
 	.project-menu-info-container {
-		text-align: center;
+		text-align: start;
 	}
 	.project-menu-desc {
 		font-size: 0.875rem;

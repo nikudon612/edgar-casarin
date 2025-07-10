@@ -45,6 +45,7 @@
 			<a
 				class="carousel-item"
 				href={`/${project.slug.current}`}
+				rel="external"
 				on:mouseenter={() => (hoveredProjectTitle = project.title)}
 				on:mouseleave={() => (hoveredProjectTitle = '')}
 			>
@@ -87,7 +88,7 @@
 		color: #353535;
 		margin: 0;
 		margin-top: 0.5rem;
-
+		padding-left: 0.5rem;
 	}
 
 	.label.right {
@@ -103,24 +104,20 @@
 	.carousel-track::-webkit-scrollbar {
 		display: none; /* Chrome, Safari, Opera */
 	}
-	.carousel-item {
-		flex: 0 0 auto;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		max-height: 213px;
-	}
 
 	.carousel-item:hover {
 		cursor: pointer;
 	}
+	.carousel-item {
+		display: inline-block; /* ✅ Let content define width */
+		scroll-snap-align: start;
+	}
 
 	.carousel-item img {
 		display: block;
-		height: 100%;
-		width: 100%;
-		max-height: 213px;
-		object-fit: cover;
+		height: 213px; /* ✅ uniform height */
+		width: auto; /* ✅ natural width from aspect ratio */
+		object-fit: contain; /* or 'cover' if you're okay with cropping */
 	}
 
 	.placeholder {
