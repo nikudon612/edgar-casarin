@@ -102,14 +102,22 @@
 		height: 100vh;
 		margin: 0;
 		padding: 0;
+		display: flex;
+		flex-direction: column;
 	}
 	.row-nav {
 		position: relative;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		height: 3vh;
+		height: 1.5rem;
+		flex: 0 0 1.5rem;
 		padding: 0 1rem;
+	}
+
+	.row.half {
+		flex: 1;
+		min-height: 0; /* prevents overflow */
 	}
 
 	/* This will pin the middle <p> dead center, independent of left/right content */

@@ -69,13 +69,14 @@
 
 <style>
 	.scroll-wrapper {
-		display: flex;
-		overflow-x: scroll;
-		scroll-behavior: auto;
-		width: 100vw;
-		height: 48.5vh;
-		scrollbar-width: none;
-	}
+	display: flex;
+	overflow-x: scroll;
+	scroll-behavior: auto;
+	width: 100%;
+	flex: 1;
+	scrollbar-width: none;
+}
+
 	.scroll-wrapper::-webkit-scrollbar {
 		display: none;
 	}
