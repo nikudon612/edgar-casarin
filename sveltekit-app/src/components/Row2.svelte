@@ -28,20 +28,21 @@
 
 <style>
 	.scroll-wrapper {
-		overflow: hidden;
-		width: 100vw;
-		position: relative;
-	}
+	display: flex;
+	overflow-x: scroll;
+	scroll-behavior: auto;
+	width: 100%;
+	flex: 1;
+	scrollbar-width: none;
+}
 
 	.row-2 {
 		display: flex;
 		flex-direction: row;
-		height: 48.5vh;
+		width: max-content;
+		height: 100%;
 		animation: scroll-right 45s linear infinite;
 		will-change: transform;
-
-		/* ✅ Ensures content can scroll seamlessly */
-		width: max-content;
 	}
 
 	@keyframes scroll-right {
