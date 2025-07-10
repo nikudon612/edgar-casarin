@@ -123,7 +123,10 @@
 	}
 
 	.headshot {
-		max-width: 100%;
+		width: 100%;
+		max-width: 600px;
 		height: auto;
+		object-fit: contain;
+		align-self: center;
 	}
 </style>
