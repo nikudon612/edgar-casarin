@@ -87,7 +87,7 @@
 		color: #353535;
 		margin: 0;
 		margin-top: 0.5rem;
-
+		padding-left: 0.5rem;
 	}
 
 	.label.right {
@@ -104,7 +104,7 @@
 		display: none; /* Chrome, Safari, Opera */
 	}
 	.carousel-item {
-		flex: 0 0 auto;
+		/* flex: 0 0 auto; */
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -118,9 +118,9 @@
 	.carousel-item img {
 		display: block;
 		height: 100%;
-		width: 100%;
-		max-height: 213px;
-		object-fit: cover;
+		width: auto;
+		/* max-height: 213px; */
+		object-fit: contain;
 	}
 
 	.placeholder {
