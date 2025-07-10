@@ -45,6 +45,7 @@
 			<a
 				class="carousel-item"
 				href={`/${project.slug.current}`}
+				rel="external"
 				on:mouseenter={() => (hoveredProjectTitle = project.title)}
 				on:mouseleave={() => (hoveredProjectTitle = '')}
 			>
