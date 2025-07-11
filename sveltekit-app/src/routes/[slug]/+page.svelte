@@ -174,4 +174,25 @@
 		object-fit: contain;
 		height: auto;
 	}
+
+	/* Responsive adjustments */
+	@media (max-width: 768px) {
+		.container {
+			overflow: visible;
+		}
+		.project-page-menu {
+			display: none; /* Hide menu on smaller screens */
+		}
+		.container {
+			flex-direction: column;
+
+		}
+
+		.menu {
+			height: auto;
+			/* max-height: 506px; */
+			width: 100%;
+			flex-shrink: 0;
+		}
+	}
 </style>
