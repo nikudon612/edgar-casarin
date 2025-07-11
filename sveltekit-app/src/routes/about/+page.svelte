@@ -128,8 +128,14 @@
 		align-self: center;
 	}
 
+	@media (max-width: 1024px) {
+		.bio-text {
+			font-size: 2.5rem;
+			line-height: 120%;
+		}
+	}
+
 	@media (max-width: 768px) {
-		
 		.layout-container {
 			flex-direction: column;
 		}
