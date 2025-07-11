@@ -114,8 +114,6 @@
 
 	:global(.bio-text a) {
 		color: #353535;
-		/* text-decoration: none; */
-		/* font-weight: 500; */
 	}
 
 	.bio-text p {
@@ -128,5 +126,34 @@
 		height: auto;
 		object-fit: contain;
 		align-self: center;
+	}
+
+	@media (max-width: 1024px) {
+		.bio-text {
+			font-size: 2.5rem;
+			line-height: 120%;
+		}
+	}
+
+	@media (max-width: 768px) {
+		.layout-container {
+			flex-direction: column;
+		}
+		.menu {
+			height: 100px;
+			width: 100vw;
+			flex-shrink: 0;
+		}
+		.bio-text {
+			font-size: 2rem;
+			line-height: 120%;
+		}
+	}
+
+	@media (max-width: 415px) {
+		.bio-text {
+			font-size: 1.25rem;
+			line-height: 130%;
+		}
 	}
 </style>

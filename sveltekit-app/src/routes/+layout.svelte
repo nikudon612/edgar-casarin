@@ -49,7 +49,7 @@
 	}
 
 	main {
-		margin-top: 45px;
+		/* margin-top: 45px; */
 	}
 
 	.header {
