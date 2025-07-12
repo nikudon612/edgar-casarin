@@ -38,11 +38,12 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		align-items: center;
+		align-items: start;
 		height: 100vh;
 		padding-left: 0.75rem;
 		padding-right: 0.75rem;
 		overflow-y: hidden;
+		text-align: left;
 	}
 	.project-menu-info-container {
 		text-align: start;
