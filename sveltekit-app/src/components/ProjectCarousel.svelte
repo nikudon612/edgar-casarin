@@ -80,7 +80,7 @@
 		align-items: start;
 		justify-items: baseline;
 		background-color: white !important;
-		height: 3vh;
+		height: 1.5rem;
 	}
 	.label {
 		flex: 0 0 auto;
