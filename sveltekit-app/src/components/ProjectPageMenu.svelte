@@ -38,7 +38,7 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		align-items: start;
+		align-items: flex-start;
 		height: 100vh;
 		padding-left: 0.75rem;
 		padding-right: 0.75rem;
