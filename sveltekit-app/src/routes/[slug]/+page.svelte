@@ -50,7 +50,19 @@
 						<!-- COLUMN LAYOUT -->
 						<div class="gallery-column">
 							{#each project.columnImages ?? [] as img}
-								<img src={img?.asset?.url} alt={project.title} />
+								{#if img?.type === 'image'}
+									<img src={img?.image?.asset?.url} alt={project.title} />
+								{:else if img?.type === 'video'}
+									<div class="video-wrapper">
+										<iframe
+											src={`https://player.vimeo.com/video/${img.vimeoId}?autoplay=0&muted=1&loop=0&title=0&byline=0&portrait=0`}
+											frameborder="0"
+											allow="autoplay; fullscreen; picture-in-picture"
+											allowfullscreen
+											loading="lazy"
+										></iframe>
+									</div>
+								{/if}
 							{/each}
 						</div>
 					{:else if project.galleryRows?.length}
@@ -185,7 +197,6 @@
 		}
 		.container {
 			flex-direction: column;
-
 		}
 
 		.menu {

@@ -16,39 +16,56 @@ export const singleProjectQuery = groq`
     title,
     description,
     slug,
+    date,
     thumbnail {
       asset->{
         url
       }
     },
-	thumbnail {
-      asset->{ url }
+    row1Images[]{
+      type,
+      order,
+      image {
+        asset->{url}
+      },
+      vimeoId,
+      posterImage {
+        asset->{url}
+      }
     },
-	row1Images[]{
-	  rowLayout,
-	  images[]{
-		asset->{
-		  url
-		}
-	  }
-	},
-	row2Images[]{
-	  rowLayout,
-	  images[]{
-		asset->{
-		  url
-		}
-	  }
-	},
-	columnImages[]{ // <-- new column images array
-      asset->{ url }
+    row2Images[]{
+      type,
+      order,
+      image {
+        asset->{url}
+      },
+      vimeoId,
+      posterImage {
+        asset->{url}
+      }
     },
-	galleryRows[]{
+    layout,
+    columnImages[]{
+      type,
+      image {
+        asset->{url}
+      },
+      vimeoId,
+      posterImage {
+        asset->{url}
+      }
+    },
+    galleryRows[]{
       rowLayout,
       disableGap,
       images[]{
+        type,
         image {
-          asset->{ url }
+          asset->{url}
+        },
+        vimeoId,
+        posterImage {
+          asset->{url}
         },
         width
       }

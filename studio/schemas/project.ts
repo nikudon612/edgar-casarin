@@ -1,4 +1,3 @@
-// /studio/schemas/project.ts
 export default {
   name: 'project',
   type: 'document',
@@ -6,15 +5,22 @@ export default {
   fieldsets: [
     {name: 'general', title: '📝 General Info', options: {collapsible: true, collapsed: false}},
     {name: 'homepage', title: '🏠 Homepage Layout', options: {collapsible: true, collapsed: true}},
-    {
-      name: 'projectPage',
-      title: '📄 Project Page Layout',
-      options: {collapsible: true, collapsed: true},
-    },
+    {name: 'projectPage', title: '📄 Project Page Layout', options: {collapsible: true, collapsed: true}},
   ],
   fields: [
-    {name: 'title', type: 'string', fieldset: 'general'},
-    {name: 'slug', type: 'slug', options: {source: 'title', maxLength: 96}, fieldset: 'general'},
+    {
+      name: 'title',
+      type: 'string',
+      fieldset: 'general',
+      validation: Rule => Rule.required().error('Title is required'),
+    },
+    {
+      name: 'slug',
+      type: 'slug',
+      options: {source: 'title', maxLength: 96},
+      fieldset: 'general',
+      validation: Rule => Rule.required().error('Slug is required'),
+    },
     {name: 'thumbnail', type: 'image', title: 'Image or Video Thumbnail', fieldset: 'general'},
     {name: 'description', type: 'text', fieldset: 'general'},
     {name: 'date', type: 'datetime', fieldset: 'general'},
@@ -39,6 +45,8 @@ export default {
         },
       ],
     },
+
+    // Top Row Images
     {
       name: 'row1Images',
       type: 'array',
@@ -49,12 +57,45 @@ export default {
         {
           type: 'object',
           fields: [
-            {name: 'image', type: 'image', title: 'Image'},
+            {
+              name: 'type',
+              type: 'string',
+              title: 'Media Type',
+              options: {
+                list: [
+                  {title: 'Image', value: 'image'},
+                  {title: 'Video (Vimeo)', value: 'video'},
+                ],
+                layout: 'radio',
+              },
+              initialValue: 'image',
+              validation: Rule => Rule.required().error('Top Row media type is required'),
+            },
+            {
+              name: 'image',
+              type: 'image',
+              title: 'Image',
+              hidden: ({parent}) => parent?.type !== 'image',
+            },
+            {
+              name: 'vimeoId',
+              type: 'string',
+              title: 'Vimeo Video ID',
+              hidden: ({parent}) => parent?.type !== 'video',
+              validation: Rule =>
+                Rule.custom((id, context) => {
+                  if (!id) return true
+                  return /^\d+$/.test(id) ? true : 'Vimeo ID must be numeric (Top Row)'
+                }),
+            },
+            {name: 'posterImage', type: 'image', title: 'Poster Image (Optional)', hidden: ({parent}) => parent?.type !== 'video'},
             {name: 'order', type: 'number', title: 'Order'},
           ],
         },
       ],
     },
+
+    // Bottom Row Images
     {
       name: 'row2Images',
       type: 'array',
@@ -65,12 +106,39 @@ export default {
         {
           type: 'object',
           fields: [
-            {name: 'image', type: 'image', title: 'Image'},
+            {
+              name: 'type',
+              type: 'string',
+              title: 'Media Type',
+              options: {
+                list: [
+                  {title: 'Image', value: 'image'},
+                  {title: 'Video (Vimeo)', value: 'video'},
+                ],
+                layout: 'radio',
+              },
+              initialValue: 'image',
+              validation: Rule => Rule.required().error('Bottom Row media type is required'),
+            },
+            {name: 'image', type: 'image', title: 'Image', hidden: ({parent}) => parent?.type !== 'image'},
+            {
+              name: 'vimeoId',
+              type: 'string',
+              title: 'Vimeo Video ID',
+              hidden: ({parent}) => parent?.type !== 'video',
+              validation: Rule =>
+                Rule.custom((id) => {
+                  if (!id) return true
+                  return /^\d+$/.test(id) ? true : 'Vimeo ID must be numeric (Bottom Row)'
+                }),
+            },
+            {name: 'posterImage', type: 'image', title: 'Poster Image (Optional)', hidden: ({parent}) => parent?.type !== 'video'},
             {name: 'order', type: 'number', title: 'Order'},
           ],
         },
       ],
     },
+
     {
       name: 'layout',
       title: 'Project Layout',
@@ -84,21 +152,57 @@ export default {
         layout: 'radio',
       },
       initialValue: 'column',
-      validation: (Rule) => Rule.required(),
+      validation: Rule => Rule.required().error('Project layout selection is required'),
     },
+
     {
       name: 'columnImages',
       title: 'Column Layout Images',
       type: 'array',
       fieldset: 'projectPage',
-      of: [{type: 'image'}],
       hidden: ({parent}) => parent?.layout !== 'column',
+      of: [
+        {
+          type: 'object',
+          initialValue: {type: 'image'},
+          fields: [
+            {
+              name: 'type',
+              type: 'string',
+              title: 'Media Type',
+              options: {
+                list: [
+                  {title: 'Image', value: 'image'},
+                  {title: 'Video (Vimeo)', value: 'video'},
+                ],
+                layout: 'radio',
+              },
+              validation: Rule => Rule.required().error('Column layout media type is required'),
+            },
+            {name: 'image', type: 'image', title: 'Image', hidden: ({parent}) => parent?.type !== 'image'},
+            {
+              name: 'vimeoId',
+              type: 'string',
+              title: 'Vimeo Video ID',
+              hidden: ({parent}) => parent?.type !== 'video',
+              validation: Rule =>
+                Rule.custom((id) => {
+                  if (!id) return true
+                  return /^\d+$/.test(id) ? true : 'Vimeo ID must be numeric (Column Layout)'
+                }),
+            },
+            {name: 'posterImage', type: 'image', title: 'Poster Image (Optional)', hidden: ({parent}) => parent?.type !== 'video'},
+          ],
+        },
+      ],
     },
+
     {
       name: 'galleryRows',
       title: 'Project Page Rows',
       type: 'array',
       fieldset: 'projectPage',
+      hidden: ({parent}) => parent?.layout === 'column',
       of: [
         {
           type: 'object',
@@ -117,21 +221,56 @@ export default {
                 layout: 'radio',
               },
               initialValue: 'one',
-              validation: (Rule) => Rule.required(),
+              validation: Rule => Rule.required().error('Row layout type is required'),
             },
             {
               name: 'images',
-              title: 'Images in This Row',
+              title: 'Images or Videos in This Row',
               type: 'array',
               of: [
                 {
                   type: 'object',
                   fields: [
-                    {name: 'image', type: 'image', title: 'Image'},
+                    {
+                      name: 'type',
+                      type: 'string',
+                      title: 'Media Type',
+                      options: {
+                        list: [
+                          {title: 'Image', value: 'image'},
+                          {title: 'Video (Vimeo)', value: 'video'},
+                        ],
+                        layout: 'radio',
+                      },
+                      validation: Rule => Rule.required().error('Row media type is required'),
+                    },
+                    {
+                      name: 'image',
+                      type: 'image',
+                      title: 'Image',
+                      hidden: ({parent}) => parent?.type !== 'image',
+                    },
+                    {
+                      name: 'vimeoId',
+                      type: 'string',
+                      title: 'Vimeo Video ID',
+                      hidden: ({parent}) => parent?.type !== 'video',
+                      validation: Rule =>
+                        Rule.custom((id) => {
+                          if (!id) return true
+                          return /^\d+$/.test(id) ? true : 'Vimeo ID must be numeric (Row)'
+                        }),
+                    },
+                    {
+                      name: 'posterImage',
+                      type: 'image',
+                      title: 'Poster Image (Optional)',
+                      hidden: ({parent}) => parent?.type !== 'video',
+                    },
                     {
                       name: 'width',
                       type: 'string',
-                      title: 'Image Width (%)',
+                      title: 'Image/Video Width (%)',
                       options: {
                         list: [
                           {title: 'Full (100%)', value: '100%'},
@@ -147,7 +286,7 @@ export default {
                   ],
                 },
               ],
-              validation: (Rule) => Rule.max(3).error('Maximum of 3 images per row.'),
+              validation: Rule => Rule.max(3).error('Maximum of 3 media items per row.'),
             },
             {
               name: 'disableGap',
@@ -156,26 +295,8 @@ export default {
               initialValue: false,
             },
           ],
-          preview: {
-            select: {
-              layout: 'rowLayout',
-              imageCount: 'images.length',
-            },
-            prepare({layout, imageCount}) {
-              const titleMap = {
-                one: '1 Image Row',
-                two: '2 Images Row',
-                three: '3 Images Row',
-              }
-              return {
-                title: titleMap[layout] || 'Image Row',
-                subtitle: `${imageCount || 0} image${imageCount === 1 ? '' : 's'}`,
-              }
-            },
-          },
         },
       ],
-      hidden: ({parent}) => parent?.layout === 'column', // 👈 hide when in column mode
     },
   ],
 }
