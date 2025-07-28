@@ -50,7 +50,19 @@
 						<!-- COLUMN LAYOUT -->
 						<div class="gallery-column">
 							{#each project.columnImages ?? [] as img}
-								<img src={img?.asset?.url} alt={project.title} />
+								{#if img?.type === 'image'}
+									<img src={img?.image?.asset?.url} alt={project.title} />
+								{:else if img?.type === 'video'}
+									<div class="video-full">
+										<iframe
+											src={`https://player.vimeo.com/video/${img.vimeoId}?background=1&autoplay=0&muted=1&loop=0`}
+											frameborder="0"
+											allow="autoplay; fullscreen; picture-in-picture"
+											allowfullscreen
+											loading="lazy"
+										></iframe>
+									</div>
+								{/if}
 							{/each}
 						</div>
 					{:else if project.galleryRows?.length}
@@ -175,6 +187,22 @@
 		height: auto;
 	}
 
+	.video-full {
+		width: 100%;
+		aspect-ratio: 16 / 9;
+		position: relative;
+		margin-bottom: 4rem;
+	}
+
+	.video-full iframe {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		border: 0;
+	}
+
 	/* Responsive adjustments */
 	@media (max-width: 768px) {
 		.container {
@@ -185,7 +213,6 @@
 		}
 		.container {
 			flex-direction: column;
-
 		}
 
 		.menu {
