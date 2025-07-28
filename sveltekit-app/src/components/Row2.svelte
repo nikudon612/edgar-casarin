@@ -41,7 +41,7 @@
 		flex-direction: row;
 		width: max-content;
 		height: 100%;
-		animation: scroll-right 45s linear infinite;
+		animation: scroll-right 90s linear infinite;
 		will-change: transform;
 	}
 
