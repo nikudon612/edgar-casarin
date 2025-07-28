@@ -34,20 +34,47 @@
 	};
 
 	onMount(() => {
-		// Start at center
-		scrollRef.scrollLeft = scrollRef.scrollWidth / 3;
+	const el = scrollRef;
+	const third = () => el.scrollWidth / 3;
 
-		const handleScroll = () => {
-			resetScrollIfNeeded();
-		};
+	// Start at center copy
+	el.scrollLeft = third();
 
-		scrollRef.addEventListener('scroll', handleScroll);
+	// Scroll loop logic
+	let rafId: number;
+	let scrollSpeed = 0.35;
 
-		// Clean up
-		return () => {
-			scrollRef.removeEventListener('scroll', handleScroll);
-		};
-	});
+	const animate = () => {
+		el.scrollLeft += scrollSpeed;
+
+		// Wrap-around logic for perfect loop
+		if (el.scrollLeft > third() * 1.5) {
+			el.scrollLeft -= third();
+		}
+
+		rafId = requestAnimationFrame(animate);
+	};
+
+	rafId = requestAnimationFrame(animate);
+
+	const handleScroll = () => {
+		// Reset position on manual scroll
+		if (el.scrollLeft < third() * 0.5) {
+			el.scrollLeft += third();
+		}
+		if (el.scrollLeft > third() * 1.5) {
+			el.scrollLeft -= third();
+		}
+	};
+
+	el.addEventListener('scroll', handleScroll);
+
+	return () => {
+		cancelAnimationFrame(rafId);
+		el.removeEventListener('scroll', handleScroll);
+	};
+});
+
 </script>
 
 <div class="scroll-wrapper" bind:this={scrollRef}>
