@@ -45,7 +45,7 @@
 
 	.project-card__image {
 		height: 100%;
-		width: auto;
+		width: 100%;
 		object-fit: cover;
 		display: block;
 	}
