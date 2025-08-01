@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
+	import { PortableText } from '@portabletext/svelte';
 
 	export let project;
 
@@ -11,7 +12,10 @@
 	{#if project}
 		<div class="project-menu-info-container">
 			<p class="project-menu-title">{project.title}</p>
-			<p class="project-menu-desc">{project.description}</p>
+			<!-- <p class="project-menu-desc">{project.description}</p> -->
+			<div class="project-menu-desc">
+				<PortableText value={project.description} />
+			</div>
 		</div>
 	{:else}
 		<p style="color:black; font-size:14px">Loading project data...</p>
@@ -51,6 +55,11 @@
 	.project-menu-desc {
 		font-size: 0.875rem;
 	}
+
+	.project-menu-desc a {
+		color: #333;
+		text-decoration: underline;
+	}
 	.project-menu-title {
 		font-size: 0.875rem;
 		font-weight: bold;
@@ -87,6 +96,13 @@
 		.project-menu-desc {
 			text-align: left;
 			/* padding: 0.5rem; */
+		}
+
+		/* scope it to your project‐description container */
+		/* make every <a> inside your description use #333 + underline */
+		:global(.project-menu-desc a) {
+			color: #333;
+			text-decoration: underline;
 		}
 		.mobile-page-menu .mobile-menu-links {
 			display: flex;
