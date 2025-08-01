@@ -1,115 +1,100 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import ProjectCard from './projectCard.svelte';
-	import type { Project } from '$lib/sanity/queries';
+  import { onMount } from 'svelte';
+  import ProjectCard from './projectCard.svelte';
+  import type { Project } from '$lib/sanity/queries';
 
-	export let projects: Project[];
+  export let projects: Project[];
 
-	let scrollRef: HTMLDivElement;
-	let observer: () => void;
+  let outer: HTMLDivElement;
+  let inner: HTMLDivElement;
 
-	// Flatten and sort
-	$: flatImages = projects
-		.flatMap((proj) =>
-			(proj.row1Images ?? []).map((imgObj) => ({
-				image: imgObj.image,
-				order: imgObj.order ?? Infinity,
-				proj
-			}))
-		)
-		.sort((a, b) => a.order - b.order);
+  // flattened + sorted as before
+  $: flatImages = projects
+    .flatMap((proj) =>
+      (proj.row1Images ?? []).map((imgObj) => ({
+        image: imgObj.image,
+        order: imgObj.order ?? Infinity,
+        proj
+      }))
+    )
+    .sort((a, b) => a.order - b.order);
 
-	// Helper to jump scroll position
-	const resetScrollIfNeeded = () => {
-		const el = scrollRef;
-		const scrollWidth = el.scrollWidth;
-		const third = scrollWidth / 3;
+  onMount(() => {
+    let rafId: number;
+    let offset = 0;
+    const speed = 0.5; // px/frame, tweak as needed
 
-		if (el.scrollLeft < third * 0.5) {
-			el.scrollLeft += third;
-		}
-		if (el.scrollLeft > third * 1.5) {
-			el.scrollLeft -= third;
-		}
-	};
+    // wait one frame so DOM is laid out
+    requestAnimationFrame(() => {
+      // measure total width of one “flatImages” group
+      const totalWidth = inner.scrollWidth;
+      const groupWidth = totalWidth / 3;
 
-	onMount(() => {
-	const el = scrollRef;
-	const third = () => el.scrollWidth / 3;
+      // start in the middle copy
+      outer.scrollLeft = groupWidth;
 
-	// Start at center copy
-	el.scrollLeft = third();
+      // 1) animation loop (translateX on inner)
+      const animate = () => {
+        offset += speed;
+        if (offset >= groupWidth) offset -= groupWidth;
+        inner.style.transform = `translateX(${-offset}px)`;
+        rafId = requestAnimationFrame(animate);
+      };
+      rafId = requestAnimationFrame(animate);
 
-	// Scroll loop logic
-	let rafId: number;
-	let scrollSpeed = 0.35;
+      // 2) seamless manual‐scroll wrap‐around
+      const handleScroll = () => {
+        if (outer.scrollLeft <= 0) {
+          outer.scrollLeft += groupWidth;
+        } else if (outer.scrollLeft >= groupWidth * 2) {
+          outer.scrollLeft -= groupWidth;
+        }
+      };
+      outer.addEventListener('scroll', handleScroll);
 
-	const animate = () => {
-		el.scrollLeft += scrollSpeed;
-
-		// Wrap-around logic for perfect loop
-		if (el.scrollLeft > third() * 1.5) {
-			el.scrollLeft -= third();
-		}
-
-		rafId = requestAnimationFrame(animate);
-	};
-
-	rafId = requestAnimationFrame(animate);
-
-	const handleScroll = () => {
-		// Reset position on manual scroll
-		if (el.scrollLeft < third() * 0.5) {
-			el.scrollLeft += third();
-		}
-		if (el.scrollLeft > third() * 1.5) {
-			el.scrollLeft -= third();
-		}
-	};
-
-	el.addEventListener('scroll', handleScroll);
-
-	return () => {
-		cancelAnimationFrame(rafId);
-		el.removeEventListener('scroll', handleScroll);
-	};
-});
-
+      return () => {
+        cancelAnimationFrame(rafId);
+        outer.removeEventListener('scroll', handleScroll);
+      };
+    });
+  });
 </script>
 
-<div class="scroll-wrapper" bind:this={scrollRef}>
-	<!-- Copy A -->
-	{#each flatImages as item, i (item.proj._id + '-a-' + i)}
-		<ProjectCard proj={item.proj} row="row1" image={item.image} />
-	{/each}
-
-	<!-- Copy B (center) -->
-	{#each flatImages as item, i (item.proj._id + '-b-' + i)}
-		<ProjectCard proj={item.proj} row="row1" image={item.image} />
-	{/each}
-
-	<!-- Copy C -->
-	{#each flatImages as item, i (item.proj._id + '-c-' + i)}
-		<ProjectCard proj={item.proj} row="row1" image={item.image} />
-	{/each}
+<!-- outer keeps your original CSS exactly as before -->
+<div class="scroll-wrapper" bind:this={outer}>
+  <!-- inner is purely a flex container we translate -->
+  <div class="inner-wrapper" bind:this={inner}>
+    {#each [flatImages, flatImages, flatImages] as images}
+      {#each images as item, i (item.proj._id + '-r1-' + i)}
+        <ProjectCard proj={item.proj} row="row1" image={item.image} />
+      {/each}
+    {/each}
+  </div>
 </div>
 
 <style>
-	.scroll-wrapper {
-	display: flex;
-	overflow-x: scroll;
-	scroll-behavior: auto;
-	width: 100%;
-	flex: 1;
-	scrollbar-width: none;
-}
+  /* ← your exact original wrapper rules ↓ */
+  .scroll-wrapper {
+    display: flex;
+    overflow-x: scroll;
+    scroll-behavior: auto;
+    width: 100%;
+    flex: 1;
+    scrollbar-width: none;
+  }
+  .scroll-wrapper::-webkit-scrollbar {
+    display: none;
+  }
 
-	.scroll-wrapper::-webkit-scrollbar {
-		display: none;
-	}
+  /* only new rule: hint to the browser we’ll animate this */
+  .inner-wrapper {
+    display: flex;
+    will-change: transform;
+  }
 
-	:global(.project-card) {
-		flex: 0 0 auto;
-		min-width: 300px; /* or whatever fixed/card size you use */
-	}
+  /* same as before */
+  :global(.project-card) {
+    flex: 0 0 auto;
+    min-width: 300px;
+  }
 </style>
