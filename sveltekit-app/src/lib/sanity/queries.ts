@@ -100,23 +100,23 @@ export interface Project {
 	description?: string;
 	date?: string;
 	thumbnail?: ImageAsset;
-	thumbnailVideo?: {
-		asset: {
-			url: string;
-		};
-	};
-	gallery?: Array<{
-		_type: 'image';
-		asset: {
-			_ref: string;
-			_type: 'reference';
-		};
-	}>;
+	thumbnailVideo?: { asset: { url: string } };
+	gallery?: { _type: 'image'; asset: { _ref: string; _type: 'reference' } }[];
+
 	row1Images?: ProjectImageWithOrder[];
 	row2Images?: ProjectImageWithOrder[];
+	columnImages?: ProjectImageWithOrder[];
+	galleryRows?: Array<{
+		rowLayout: string;
+		disableGap: boolean;
+		images: (ProjectImageWithOrder & { width?: string })[];
+	}>;
 }
 
 export interface ProjectImageWithOrder {
-	image: ImageAsset;
-	order: number;
+	type: 'image' | 'video';
+	image?: ImageAsset;
+	vimeoId?: string;
+	posterImage?: ImageAsset;
+	order?: number;
 }
