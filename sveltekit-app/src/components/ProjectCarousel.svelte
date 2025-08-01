@@ -78,7 +78,7 @@
 		display: flex;
 		width: 100%;
 		align-items: start;
-		justify-items: baseline;
+		justify-items: center;
 		background-color: white !important;
 		height: 1.5rem;
 	}
@@ -87,8 +87,9 @@
 		font-size: 0.875rem;
 		color: #353535;
 		margin: 0;
-		margin-top: 0.5rem;
+		margin-top: 0.25rem;
 		padding-left: 0.5rem;
+		height: 100%;
 	}
 
 	.label.right {
