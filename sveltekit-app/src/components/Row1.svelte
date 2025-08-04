@@ -3,6 +3,7 @@
 	import { urlFor } from '$lib/sanity/image';
 	import ProjectCard from './projectCard.svelte';
 	import type { Project } from '$lib/sanity/queries';
+	import { fileUrlFor } from '../lib/sanity/fileUrl';
 
 	export let projects: Project[];
 
@@ -15,14 +16,17 @@
 	$: flatImages = projects
 		.flatMap((proj) =>
 			(proj.row1Images ?? []).map((imgObj) => ({
+				type: imgObj.type,
 				image: imgObj.image,
 				vimeoId: imgObj.vimeoId,
-				videoFile: imgObj.videoFile,
+				videoRef: imgObj.videoFile?.asset?._ref,
 				order: imgObj.order ?? Infinity,
 				proj
 			}))
 		)
 		.sort((a, b) => a.order - b.order);
+
+	$: console.log('Flat images:', flatImages);
 
 	// onMount(() => {
 	// 	let rafId: number;
@@ -71,28 +75,31 @@
 	<div class="inner-wrapper" bind:this={inner}>
 		{#each [flatImages, flatImages, flatImages] as images}
 			{#each images as item, i (item.proj._id + '-r1-' + i)}
-				<!-- {#if item.videoFile}
-					<a href={item.proj.slug.current} class="project-link">
-						<div class="project-card">
-							<div class="video-wrapper">
-								<video
-									src={item.videoFile}
-									poster={item.image?.asset?._ref
-										? urlFor(item.image).width(1200).height(630).auto('format').url()
-										: undefined}
-									autoplay
-									loop
-									muted
-									playsinline
-									class="video-iframe"
-								/>
-							</div>
-						</div>
+				{#if item.type === 'file' && item.videoRef}
+					<a
+						class="project-card"
+						href={`/${item.proj.slug.current}`}
+						on:mouseenter={() => handleMouseEnter(item.proj.title)}
+						on:mouseleave={handleMouseLeave}
+					>
+						<video class="project-card__image" autoplay loop muted playsinline poster={item.poster}>
+							{#if item.videoRef.endsWith('webm')}
+								<source src={fileUrlFor(item.videoRef)} type="video/webm" />
+							{:else}
+								<source src={fileUrlFor(item.videoRef)} type="video/mp4" />
+							{/if}
+							Sorry, your browser doesn’t support embedded videos.
+						</video>
 					</a>
-				{:else}
+				{:else if item.type === 'image'}
 					<ProjectCard proj={item.proj} row="row1" image={item.image} />
-				{/if} -->
-				{#if item.vimeoId}
+				{:else}
+					<div class="project-card__image--none">
+						<p>No image or video available</p>
+					</div>
+				{/if}
+
+				<!-- {#if item.vimeoId}
 					<a href={item.proj.slug.current} class="project-link">
 						<div class="project-card">
 							<div class="video-wrapper">
@@ -108,7 +115,7 @@
 					</a>
 				{:else}
 					<ProjectCard proj={item.proj} row="row1" image={item.image} />
-				{/if}
+				{/if} -->
 			{/each}
 		{/each}
 	</div>
