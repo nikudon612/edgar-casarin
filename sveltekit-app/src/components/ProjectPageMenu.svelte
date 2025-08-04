@@ -56,10 +56,6 @@
 		font-size: 0.875rem;
 	}
 
-	.project-menu-desc a {
-		color: #333;
-		text-decoration: underline;
-	}
 	.project-menu-title {
 		font-size: 0.875rem;
 		font-weight: bold;
@@ -71,6 +67,12 @@
 	.info {
 		font-size: 0.875rem;
 		padding-bottom: 0.75rem;
+	}
+
+	/* this will match any <a> inside a .project-menu-desc, even if Svelte didn’t inject it */
+	:global(.project-menu-desc a) {
+		color: #353535;
+		text-decoration: underline;
 	}
 
 	@media (max-width: 768px) {
