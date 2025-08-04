@@ -22,45 +22,45 @@
 		)
 		.sort((a, b) => a.order - b.order);
 
-	onMount(() => {
-		let rafId: number;
-		let offset = 0;
-		const speed = 0.5; // px/frame, tweak as needed
+	// onMount(() => {
+	// 	let rafId: number;
+	// 	let offset = 0;
+	// 	const speed = 0.5; // px/frame, tweak as needed
 
-		// wait one frame so DOM is laid out
-		requestAnimationFrame(() => {
-			// measure total width of one “flatImages” group
-			const totalWidth = inner.scrollWidth;
-			const groupWidth = totalWidth / 3;
+	// 	// wait one frame so DOM is laid out
+	// 	requestAnimationFrame(() => {
+	// 		// measure total width of one “flatImages” group
+	// 		const totalWidth = inner.scrollWidth;
+	// 		const groupWidth = totalWidth / 3;
 
-			// start in the middle copy
-			outer.scrollLeft = groupWidth;
+	// 		// start in the middle copy
+	// 		outer.scrollLeft = groupWidth;
 
-			// 1) animation loop (translateX on inner)
-			const animate = () => {
-				offset += speed;
-				if (offset >= groupWidth) offset -= groupWidth;
-				inner.style.transform = `translateX(${-offset}px)`;
-				rafId = requestAnimationFrame(animate);
-			};
-			rafId = requestAnimationFrame(animate);
+	// 		// 1) animation loop (translateX on inner)
+	// 		const animate = () => {
+	// 			offset += speed;
+	// 			if (offset >= groupWidth) offset -= groupWidth;
+	// 			inner.style.transform = `translateX(${-offset}px)`;
+	// 			rafId = requestAnimationFrame(animate);
+	// 		};
+	// 		rafId = requestAnimationFrame(animate);
 
-			// 2) seamless manual‐scroll wrap‐around
-			const handleScroll = () => {
-				if (outer.scrollLeft <= 0) {
-					outer.scrollLeft += groupWidth;
-				} else if (outer.scrollLeft >= groupWidth * 2) {
-					outer.scrollLeft -= groupWidth;
-				}
-			};
-			outer.addEventListener('scroll', handleScroll);
+	// 		// 2) seamless manual‐scroll wrap‐around
+	// 		const handleScroll = () => {
+	// 			if (outer.scrollLeft <= 0) {
+	// 				outer.scrollLeft += groupWidth;
+	// 			} else if (outer.scrollLeft >= groupWidth * 2) {
+	// 				outer.scrollLeft -= groupWidth;
+	// 			}
+	// 		};
+	// 		outer.addEventListener('scroll', handleScroll);
 
-			return () => {
-				cancelAnimationFrame(rafId);
-				outer.removeEventListener('scroll', handleScroll);
-			};
-		});
-	});
+	// 		return () => {
+	// 			cancelAnimationFrame(rafId);
+	// 			outer.removeEventListener('scroll', handleScroll);
+	// 		};
+	// 	});
+	// });
 </script>
 
 <!-- outer keeps your original CSS exactly as before -->
