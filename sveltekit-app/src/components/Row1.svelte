@@ -4,6 +4,7 @@
 	import ProjectCard from './projectCard.svelte';
 	import type { Project } from '$lib/sanity/queries';
 	import { fileUrlFor } from '../lib/sanity/fileUrl';
+	import VideoCard from './videoCard.svelte';
 
 	export let projects: Project[];
 
@@ -76,7 +77,8 @@
 		{#each [flatImages, flatImages, flatImages] as images}
 			{#each images as item, i (item.proj._id + '-r1-' + i)}
 				{#if item.type === 'file' && item.videoRef}
-					<a
+					<VideoCard proj={item.proj} videoRef={item.videoRef} row="row1" />
+					<!-- <a
 						class="project-card"
 						href={`/${item.proj.slug.current}`}
 						on:mouseenter={() => handleMouseEnter(item.proj.title)}
@@ -90,7 +92,7 @@
 							{/if}
 							Sorry, your browser doesn’t support embedded videos.
 						</video>
-					</a>
+					</a> -->
 				{:else if item.type === 'image'}
 					<ProjectCard proj={item.proj} row="row1" image={item.image} />
 				{:else}
