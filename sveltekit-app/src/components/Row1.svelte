@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-  import { urlFor } from '$lib/sanity/image';
+	import { urlFor } from '$lib/sanity/image';
 	import ProjectCard from './projectCard.svelte';
 	import type { Project } from '$lib/sanity/queries';
 
@@ -17,7 +17,7 @@
 			(proj.row1Images ?? []).map((imgObj) => ({
 				image: imgObj.image,
 				vimeoId: imgObj.vimeoId,
-				videoFile: imgObj.videoFile?.asset?._ref,
+				videoFile: imgObj.videoFile,
 				order: imgObj.order ?? Infinity,
 				proj
 			}))
@@ -71,7 +71,7 @@
 	<div class="inner-wrapper" bind:this={inner}>
 		{#each [flatImages, flatImages, flatImages] as images}
 			{#each images as item, i (item.proj._id + '-r1-' + i)}
-				{#if item.videoFile}
+				<!-- {#if item.videoFile}
 					<a href={item.proj.slug.current} class="project-link">
 						<div class="project-card">
 							<div class="video-wrapper">
@@ -91,8 +91,8 @@
 					</a>
 				{:else}
 					<ProjectCard proj={item.proj} row="row1" image={item.image} />
-				{/if}
-				<!-- {#if item.vimeoId}
+				{/if} -->
+				{#if item.vimeoId}
 					<a href={item.proj.slug.current} class="project-link">
 						<div class="project-card">
 							<div class="video-wrapper">
@@ -108,7 +108,7 @@
 					</a>
 				{:else}
 					<ProjectCard proj={item.proj} row="row1" image={item.image} />
-				{/if} -->
+				{/if}
 			{/each}
 		{/each}
 	</div>
