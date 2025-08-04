@@ -29,6 +29,7 @@ export const singleProjectQuery = groq`
         asset->{url}
       },
       vimeoId,
+      "videoFileUrl": videoFile.asset->url
       posterImage {
         asset->{url}
       }
@@ -40,6 +41,7 @@ export const singleProjectQuery = groq`
         asset->{url}
       },
       vimeoId,
+      "videoFileUrl": videoFile.asset->url
       posterImage {
         asset->{url}
       }
@@ -51,6 +53,7 @@ export const singleProjectQuery = groq`
         asset->{url}
       },
       vimeoId,
+      "videoFileUrl": videoFile.asset->url
       posterImage {
         asset->{url}
       }
@@ -64,6 +67,7 @@ export const singleProjectQuery = groq`
           asset->{url}
         },
         vimeoId,
+        "videoFileUrl": videoFile.asset->url
         posterImage {
           asset->{url}
         },
@@ -117,6 +121,7 @@ export interface ProjectImageWithOrder {
 	type: 'image' | 'video';
 	image?: ImageAsset;
 	vimeoId?: string;
+	videoFileUrl?: string; 
 	posterImage?: ImageAsset;
 	order?: number;
 }

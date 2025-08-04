@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+  import { urlFor } from '$lib/sanity/image';
 	import ProjectCard from './projectCard.svelte';
 	import type { Project } from '$lib/sanity/queries';
 
@@ -15,7 +16,8 @@
 		.flatMap((proj) =>
 			(proj.row1Images ?? []).map((imgObj) => ({
 				image: imgObj.image,
-				vimeoId: imgObj.vimeoId, // Vimeo ID string
+				vimeoId: imgObj.vimeoId,
+				videoFile: imgObj.videoFile?.asset?._ref,
 				order: imgObj.order ?? Infinity,
 				proj
 			}))
@@ -69,7 +71,28 @@
 	<div class="inner-wrapper" bind:this={inner}>
 		{#each [flatImages, flatImages, flatImages] as images}
 			{#each images as item, i (item.proj._id + '-r1-' + i)}
-				{#if item.vimeoId}
+				{#if item.videoFile}
+					<a href={item.proj.slug.current} class="project-link">
+						<div class="project-card">
+							<div class="video-wrapper">
+								<video
+									src={item.videoFile}
+									poster={item.image?.asset?._ref
+										? urlFor(item.image).width(1200).height(630).auto('format').url()
+										: undefined}
+									autoplay
+									loop
+									muted
+									playsinline
+									class="video-iframe"
+								/>
+							</div>
+						</div>
+					</a>
+				{:else}
+					<ProjectCard proj={item.proj} row="row1" image={item.image} />
+				{/if}
+				<!-- {#if item.vimeoId}
 					<a href={item.proj.slug.current} class="project-link">
 						<div class="project-card">
 							<div class="video-wrapper">
@@ -85,7 +108,7 @@
 					</a>
 				{:else}
 					<ProjectCard proj={item.proj} row="row1" image={item.image} />
-				{/if}
+				{/if} -->
 			{/each}
 		{/each}
 	</div>
@@ -105,12 +128,20 @@
 		display: none;
 	}
 
-	/* New wrapper around the iframe */
 	.video-wrapper {
 		position: relative;
 		width: 100%;
+		aspect-ratio: 16 / 9; /* ← lock in 16:9 */
+		overflow: hidden;
+	}
+
+	.video-wrapper .video-iframe {
+		position: absolute;
+		inset: 0; /* shorthand for top:0; right:0; bottom:0; left:0; */
+		width: 100%;
 		height: 100%;
 	}
+
 	.project-link {
 		display: block;
 		text-decoration: none;
@@ -128,7 +159,7 @@
 		min-width: 100%;
 		min-height: 100%;
 		/* we don’t need width/height explicitly—min-* will enforce cover */
-		transform: translate(-50%, -50%);
+		/* transform: translate(-50%, -50%); */
 	}
 
 	/* only new rule: hint to the browser we’ll animate this */
