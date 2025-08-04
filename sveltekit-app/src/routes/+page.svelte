@@ -11,7 +11,7 @@
 
 	$: ({ data } = $q);
 	$: ({ projects, about } = data ?? {});
-	// $: console.log('homepage projects:', projects);
+	$: console.log('homepage projects:', projects);
 	// $: console.log('about:', about);
 
 	// Helper to get the lowest order value from an array of images

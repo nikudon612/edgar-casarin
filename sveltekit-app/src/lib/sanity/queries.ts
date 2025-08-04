@@ -9,6 +9,57 @@ export const postsQuery = groq`*[_type == "post" && defined(slug.current)] | ord
 export const aboutQuery = groq`*[_type == "about"][0]`;
 
 export const allProjectsQuery = groq`*[_type == "project" && defined(slug.current)] | order(date desc)`;
+// export const allProjectsQuery = groq`
+//   *[_type == "project" && defined(slug.current)]
+//   | order(date desc){
+//     _id,
+//     slug,
+//     title,
+//     description,
+//     date,
+
+//     row1Images[]{
+//       _key,
+//       type,
+//       order,
+//       image        { asset-> { url } },
+//       posterImage  { asset-> { url } },
+//       "videoFileUrl": videoFile.asset->url
+//     },
+
+//     row2Images[]{
+//       _key,
+//       type,
+//       order,
+//       image        { asset-> { url } },
+//       posterImage  { asset-> { url } },
+//       "videoFileUrl": videoFile.asset->url
+//     },
+
+//     columnImages[]{
+//       _key,
+//       type,
+//       image        { asset-> { url } },
+//       posterImage  { asset-> { url } },
+//       "videoFileUrl": videoFile.asset->url
+//     },
+
+//     galleryRows[]{
+//       _key,
+//       rowLayout,
+//       disableGap,
+//       images[]{
+//         _key,
+//         type,
+//         image       { asset-> { url } },
+//         posterImage { asset-> { url } },
+//         "videoFileUrl": videoFile.asset->url,
+//         width
+//       }
+//     }
+
+//   }
+// `;
 
 export const singleProjectQuery = groq`
   *[_type == "project" && slug.current == $slug][0]{
@@ -29,6 +80,7 @@ export const singleProjectQuery = groq`
         asset->{url}
       },
       vimeoId,
+      "videoFileUrl": videoFile.asset->url,
       posterImage {
         asset->{url}
       }
@@ -40,6 +92,7 @@ export const singleProjectQuery = groq`
         asset->{url}
       },
       vimeoId,
+      "videoFileUrl": videoFile.asset->url,
       posterImage {
         asset->{url}
       }
@@ -51,6 +104,7 @@ export const singleProjectQuery = groq`
         asset->{url}
       },
       vimeoId,
+      "videoFileUrl": videoFile.asset->url,
       posterImage {
         asset->{url}
       }
@@ -64,6 +118,7 @@ export const singleProjectQuery = groq`
           asset->{url}
         },
         vimeoId,
+        "videoFileUrl": videoFile.asset->url,
         posterImage {
           asset->{url}
         },
@@ -114,9 +169,10 @@ export interface Project {
 }
 
 export interface ProjectImageWithOrder {
-	type: 'image' | 'video';
+	type: 'image' | 'video' | 'file';
 	image?: ImageAsset;
 	vimeoId?: string;
+	videoFileUrl?: string;
 	posterImage?: ImageAsset;
 	order?: number;
 }

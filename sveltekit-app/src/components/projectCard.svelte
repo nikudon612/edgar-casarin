@@ -28,6 +28,10 @@
 			src={urlFor(image).width(1000).auto('format').url()}
 			alt={`Image for ${proj.title}`}
 		/>
+	<!-- {:else if videoFile?.asset?._ref}
+		<div class="project-card__image">
+			<p>video ref</p>
+		</div> -->
 	{:else}
 		<div class="project-card__image--none" />
 	{/if}
@@ -52,7 +56,7 @@
 
 	.project-card__image--none {
 		width: 100%;
-		height: 300px;
+		height: 100%;
 		background-color: #ccc;
 	}
 </style>

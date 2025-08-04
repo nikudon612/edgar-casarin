@@ -77,6 +77,7 @@ export default {
                 list: [
                   {title: 'Image', value: 'image'},
                   {title: 'Video (Vimeo)', value: 'video'},
+                  {title: 'Video File', value: 'file'},
                 ],
                 layout: 'radio',
               },
@@ -99,6 +100,15 @@ export default {
                   if (!id) return true
                   return /^\d+$/.test(id) ? true : 'Vimeo ID must be numeric (Top Row)'
                 }),
+            },
+            {
+              name: 'videoFile',
+              type: 'file',
+              title: 'Video File (MP4/WebM)',
+              hidden: ({parent}) => parent?.type !== 'file',
+              options: {
+                accept: 'video/mp4,video/webm',
+              },
             },
             {
               name: 'posterImage',
@@ -131,6 +141,7 @@ export default {
                 list: [
                   {title: 'Image', value: 'image'},
                   {title: 'Video (Vimeo)', value: 'video'},
+                  {title: 'Video File', value: 'file'},
                 ],
                 layout: 'radio',
               },
@@ -153,6 +164,15 @@ export default {
                   if (!id) return true
                   return /^\d+$/.test(id) ? true : 'Vimeo ID must be numeric (Bottom Row)'
                 }),
+            },
+            {
+              name: 'videoFile',
+              type: 'file',
+              title: 'Video File (MP4/WebM)',
+              hidden: ({parent}) => parent?.type !== 'file',
+              options: {
+                accept: 'video/mp4,video/webm',
+              },
             },
             {
               name: 'posterImage',

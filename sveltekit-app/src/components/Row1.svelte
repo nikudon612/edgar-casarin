@@ -1,7 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { urlFor } from '$lib/sanity/image';
 	import ProjectCard from './projectCard.svelte';
 	import type { Project } from '$lib/sanity/queries';
+	import { fileUrlFor } from '../lib/sanity/fileUrl';
+	import VideoCard from './videoCard.svelte';
 
 	export let projects: Project[];
 
@@ -14,53 +17,57 @@
 	$: flatImages = projects
 		.flatMap((proj) =>
 			(proj.row1Images ?? []).map((imgObj) => ({
+				type: imgObj.type,
 				image: imgObj.image,
-				vimeoId: imgObj.vimeoId, // Vimeo ID string
+				vimeoId: imgObj.vimeoId,
+				videoRef: imgObj.videoFile?.asset?._ref,
 				order: imgObj.order ?? Infinity,
 				proj
 			}))
 		)
 		.sort((a, b) => a.order - b.order);
 
-	onMount(() => {
-		let rafId: number;
-		let offset = 0;
-		const speed = 0.5; // px/frame, tweak as needed
+	$: console.log('Flat images:', flatImages);
 
-		// wait one frame so DOM is laid out
-		requestAnimationFrame(() => {
-			// measure total width of one “flatImages” group
-			const totalWidth = inner.scrollWidth;
-			const groupWidth = totalWidth / 3;
+	// onMount(() => {
+	// 	let rafId: number;
+	// 	let offset = 0;
+	// 	const speed = 0.5; // px/frame, tweak as needed
 
-			// start in the middle copy
-			outer.scrollLeft = groupWidth;
+	// 	// wait one frame so DOM is laid out
+	// 	requestAnimationFrame(() => {
+	// 		// measure total width of one “flatImages” group
+	// 		const totalWidth = inner.scrollWidth;
+	// 		const groupWidth = totalWidth / 3;
 
-			// 1) animation loop (translateX on inner)
-			const animate = () => {
-				offset += speed;
-				if (offset >= groupWidth) offset -= groupWidth;
-				inner.style.transform = `translateX(${-offset}px)`;
-				rafId = requestAnimationFrame(animate);
-			};
-			rafId = requestAnimationFrame(animate);
+	// 		// start in the middle copy
+	// 		outer.scrollLeft = groupWidth;
 
-			// 2) seamless manual‐scroll wrap‐around
-			const handleScroll = () => {
-				if (outer.scrollLeft <= 0) {
-					outer.scrollLeft += groupWidth;
-				} else if (outer.scrollLeft >= groupWidth * 2) {
-					outer.scrollLeft -= groupWidth;
-				}
-			};
-			outer.addEventListener('scroll', handleScroll);
+	// 		// 1) animation loop (translateX on inner)
+	// 		const animate = () => {
+	// 			offset += speed;
+	// 			if (offset >= groupWidth) offset -= groupWidth;
+	// 			inner.style.transform = `translateX(${-offset}px)`;
+	// 			rafId = requestAnimationFrame(animate);
+	// 		};
+	// 		rafId = requestAnimationFrame(animate);
 
-			return () => {
-				cancelAnimationFrame(rafId);
-				outer.removeEventListener('scroll', handleScroll);
-			};
-		});
-	});
+	// 		// 2) seamless manual‐scroll wrap‐around
+	// 		const handleScroll = () => {
+	// 			if (outer.scrollLeft <= 0) {
+	// 				outer.scrollLeft += groupWidth;
+	// 			} else if (outer.scrollLeft >= groupWidth * 2) {
+	// 				outer.scrollLeft -= groupWidth;
+	// 			}
+	// 		};
+	// 		outer.addEventListener('scroll', handleScroll);
+
+	// 		return () => {
+	// 			cancelAnimationFrame(rafId);
+	// 			outer.removeEventListener('scroll', handleScroll);
+	// 		};
+	// 	});
+	// });
 </script>
 
 <!-- outer keeps your original CSS exactly as before -->
@@ -69,7 +76,32 @@
 	<div class="inner-wrapper" bind:this={inner}>
 		{#each [flatImages, flatImages, flatImages] as images}
 			{#each images as item, i (item.proj._id + '-r1-' + i)}
-				{#if item.vimeoId}
+				{#if item.type === 'file' && item.videoRef}
+					<VideoCard proj={item.proj} videoRef={item.videoRef} row="row1" />
+					<!-- <a
+						class="project-card"
+						href={`/${item.proj.slug.current}`}
+						on:mouseenter={() => handleMouseEnter(item.proj.title)}
+						on:mouseleave={handleMouseLeave}
+					>
+						<video class="project-card__image" autoplay loop muted playsinline poster={item.poster}>
+							{#if item.videoRef.endsWith('webm')}
+								<source src={fileUrlFor(item.videoRef)} type="video/webm" />
+							{:else}
+								<source src={fileUrlFor(item.videoRef)} type="video/mp4" />
+							{/if}
+							Sorry, your browser doesn’t support embedded videos.
+						</video>
+					</a> -->
+				{:else if item.type === 'image'}
+					<ProjectCard proj={item.proj} row="row1" image={item.image} />
+				{:else}
+					<div class="project-card__image--none">
+						<p>No image or video available</p>
+					</div>
+				{/if}
+
+				<!-- {#if item.vimeoId}
 					<a href={item.proj.slug.current} class="project-link">
 						<div class="project-card">
 							<div class="video-wrapper">
@@ -85,7 +117,7 @@
 					</a>
 				{:else}
 					<ProjectCard proj={item.proj} row="row1" image={item.image} />
-				{/if}
+				{/if} -->
 			{/each}
 		{/each}
 	</div>
@@ -105,12 +137,20 @@
 		display: none;
 	}
 
-	/* New wrapper around the iframe */
 	.video-wrapper {
 		position: relative;
 		width: 100%;
+		aspect-ratio: 16 / 9; /* ← lock in 16:9 */
+		overflow: hidden;
+	}
+
+	.video-wrapper .video-iframe {
+		position: absolute;
+		inset: 0; /* shorthand for top:0; right:0; bottom:0; left:0; */
+		width: 100%;
 		height: 100%;
 	}
+
 	.project-link {
 		display: block;
 		text-decoration: none;
@@ -128,7 +168,7 @@
 		min-width: 100%;
 		min-height: 100%;
 		/* we don’t need width/height explicitly—min-* will enforce cover */
-		transform: translate(-50%, -50%);
+		/* transform: translate(-50%, -50%); */
 	}
 
 	/* only new rule: hint to the browser we’ll animate this */
