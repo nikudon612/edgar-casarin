@@ -28,7 +28,7 @@
 			src={urlFor(image).width(1000).auto('format').url()}
 			alt={`Image for ${proj.title}`}
 		/>
-	<!-- {:else if videoFile?.asset?._ref}
+		<!-- {:else if videoFile?.asset?._ref}
 		<div class="project-card__image">
 			<p>video ref</p>
 		</div> -->

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { hoveredProjectName } from '$lib/stores';
 	import { fileUrlFor } from '$lib/sanity/fileUrl';
+	import { lazyVideo } from '$lib/loaders/lazyVideo';
 	import type { Project } from '$lib/sanity/queries';
 
 	export let proj: Project;
