@@ -22,16 +22,7 @@
 	on:mouseenter={handleMouseEnter}
 	on:mouseleave={handleMouseLeave}
 >
-	<video
-		class="project-card__image"
-		{poster}
-		autoplay
-		loop
-		muted
-		playsinline
-		preload="none"
-		use:lazyVideo
-	>
+	<video class="project-card__image" {poster} autoplay loop muted playsinline>
 		{#if videoRef.endsWith('.webm')}
 			<source src={fileUrlFor(videoRef)} type="video/webm" />
 		{:else}

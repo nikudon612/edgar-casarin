@@ -27,7 +27,6 @@
 			class="project-card__image"
 			src={urlFor(image).width(1000).auto('format').url()}
 			alt={`Image for ${proj.title}`}
-			loading="lazy"
 		/>
 		<!-- {:else if videoFile?.asset?._ref}
 		<div class="project-card__image">
