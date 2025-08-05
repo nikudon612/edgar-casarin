@@ -11,7 +11,7 @@
 
 	$: ({ data } = $q);
 	$: ({ projects, about } = data ?? {});
-	$: console.log('homepage projects:', projects);
+	// $: console.log('homepage projects:', projects);
 	// $: console.log('about:', about);
 
 	// Helper to get the lowest order value from an array of images
@@ -34,9 +34,6 @@
 			...p,
 			row2Images: [...p.row2Images].sort((a, b) => a.order - b.order)
 		}));
-
-	// $: console.log('row1Projects:', row1Projects);
-	// $: console.log('row2Projects:', row2Projects);
 </script>
 
 <svelte:head>
