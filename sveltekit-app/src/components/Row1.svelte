@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { urlFor } from '$lib/sanity/image';
 	import ProjectCard from './projectCard.svelte';
 	import type { Project } from '$lib/sanity/queries';
 	import { fileUrlFor } from '../lib/sanity/fileUrl';
@@ -8,7 +7,7 @@
 
 	export let projects: Project[];
 
-	console.log('Row1 projects:', projects);
+	// console.log('Row1 projects:', projects);
 
 	let outer: HTMLDivElement;
 	let inner: HTMLDivElement;
@@ -26,8 +25,6 @@
 			}))
 		)
 		.sort((a, b) => a.order - b.order);
-
-	$: console.log('Flat images:', flatImages);
 
 	onMount(() => {
 		let rafId: number;

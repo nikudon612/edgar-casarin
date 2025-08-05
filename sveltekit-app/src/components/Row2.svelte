@@ -1,17 +1,22 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import ProjectCard from './projectCard.svelte';
+	import ProjectCard from './ProjectCard.svelte';
+	import VideoCard from './VideoCard.svelte';
 	import type { Project } from '$lib/sanity/queries';
 
 	export let projects: Project[];
 
 	let scrollRef: HTMLDivElement;
 
-	// Flatten and sort row2 images
+	// Flatten & sort row2
 	$: flatImages = projects
 		.flatMap((proj) =>
 			(proj.row2Images ?? []).map((imgObj) => ({
+				_key: imgObj._key,
+				type: imgObj.type,
 				image: imgObj.image,
+				videoRef: imgObj.videoFile?.asset?._ref,
+				poster: imgObj.posterImage?.asset?.url,
 				order: imgObj.order ?? Infinity,
 				proj
 			}))
@@ -20,35 +25,35 @@
 
 	onMount(() => {
 		const el = scrollRef;
-		const third = () => el.scrollWidth / 3;
-
-		// Start at center copy
-		el.scrollLeft = third();
-
 		let rafId: number;
-		const scrollSpeed = 0.35;
 
-		const animate = () => {
-			el.scrollLeft -= scrollSpeed;
+		// Width of one group (we'll render 3 copies)
+		const groupWidth = el.scrollWidth / 3;
 
-			if (el.scrollLeft > third() * 1.5) {
-				el.scrollLeft -= third();
+		// Start in the middle copy
+		el.scrollLeft = groupWidth;
+
+		const speed = 0.5; // px/frame
+
+		// 1) Auto-scroll forward
+		function animate() {
+			el.scrollLeft -= speed;
+			// if we've scrolled past the 2nd copy, wrap back
+			if (el.scrollLeft >= groupWidth * 2) {
+				el.scrollLeft -= groupWidth;
 			}
-
 			rafId = requestAnimationFrame(animate);
-		};
-
+		}
 		rafId = requestAnimationFrame(animate);
 
+		// 2) Seamless manual scroll wrap
 		const handleScroll = () => {
-			if (el.scrollLeft < third() * 0.5) {
-				el.scrollLeft += third();
-			}
-			if (el.scrollLeft > third() * 1.5) {
-				el.scrollLeft -= third();
+			if (el.scrollLeft <= 0) {
+				el.scrollLeft += groupWidth;
+			} else if (el.scrollLeft >= groupWidth * 2) {
+				el.scrollLeft -= groupWidth;
 			}
 		};
-
 		el.addEventListener('scroll', handleScroll);
 
 		return () => {
@@ -59,19 +64,14 @@
 </script>
 
 <div class="scroll-wrapper" bind:this={scrollRef}>
-	<!-- Copy A -->
-	{#each flatImages as item, i (item.proj._id + '-a-' + i)}
-		<ProjectCard proj={item.proj} row="row2" image={item.image} />
-	{/each}
-
-	<!-- Copy B (center) -->
-	{#each flatImages as item, i (item.proj._id + '-b-' + i)}
-		<ProjectCard proj={item.proj} row="row2" image={item.image} />
-	{/each}
-
-	<!-- Copy C -->
-	{#each flatImages as item, i (item.proj._id + '-c-' + i)}
-		<ProjectCard proj={item.proj} row="row2" image={item.image} />
+	{#each [flatImages, flatImages, flatImages] as images, groupIdx}
+		{#each images as item (item._key + '-r2-' + groupIdx)}
+			{#if item.type === 'file' && item.videoRef}
+				<VideoCard proj={item.proj} videoRef={item.videoRef} poster={item.poster} />
+			{:else if item.type === 'image'}
+				<ProjectCard proj={item.proj} row="row2" image={item.image} />
+			{/if}
+		{/each}
 	{/each}
 </div>
 
@@ -83,22 +83,17 @@
 		width: 100%;
 		flex: 1;
 		scrollbar-width: none;
-		-ms-overflow-style: none;
 	}
 	.scroll-wrapper::-webkit-scrollbar {
 		display: none;
 	}
 
+	/* ensure project-card children behave identically */
 	:global(.project-card) {
 		flex: 0 0 auto;
-		min-width: 300px; /* Or match your actual card size */
-	}
-
-	/* Remove old transform-based animation */
-	.row-2 {
-		display: flex;
-		flex-direction: row;
-		width: max-content;
+		min-width: 300px; /* match your card width */
 		height: 100%;
 	}
+
+	/* no transform-based animation here, scrollLeft takes care of direction */
 </style>
