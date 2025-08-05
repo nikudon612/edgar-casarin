@@ -49,18 +49,36 @@
 					{#if project.columnImages?.length}
 						<!-- COLUMN LAYOUT -->
 						<div class="gallery-column">
-							{#each project.columnImages ?? [] as img}
-								{#if img?.type === 'image'}
-									<img src={img?.image?.asset?.url} alt={project.title} />
-								{:else if img?.type === 'video'}
+							{#each project.columnImages as img}
+								{#if img.type === 'image' && img.image}
+									<img
+										src={img.image.asset.url}
+										alt={project.title}
+										style="width:100%; height:auto; display:block;"
+									/>
+								{:else if img.type === 'video' && img.vimeoId}
 									<div class="video-full">
-										<iframe
-											src={`https://player.vimeo.com/video/${img.vimeoId}?background=1&autoplay=0&muted=1&loop=0`}
-											frameborder="0"
-											allow="autoplay; fullscreen; picture-in-picture"
-											allowfullscreen
-											loading="lazy"
-										></iframe>
+										{#if img.playbackOption === 'controls'}
+											<!-- controls-only -->
+											<iframe
+												src={`https://player.vimeo.com/video/${img.vimeoId}?muted=1&controls=1`}
+												frameborder="0"
+												allow="autoplay; fullscreen; picture-in-picture"
+												allowfullscreen
+												loading="lazy"
+												style="width:100%; height:100%;"
+											></iframe>
+										{:else}
+											<!-- autoplay+loop, no controls -->
+											<iframe
+												src={`https://player.vimeo.com/video/${img.vimeoId}?background=1&autoplay=1&loop=1&muted=1`}
+												frameborder="0"
+												allow="autoplay; fullscreen; picture-in-picture"
+												allowfullscreen
+												loading="lazy"
+												style="width:100%; height:100%;"
+											></iframe>
+										{/if}
 									</div>
 								{/if}
 							{/each}
@@ -82,29 +100,33 @@
 											/>
 										{:else if item.type === 'video' && item.vimeoId}
 											<div class="video-item" style={`width: ${item.width}; aspect-ratio: 16/9;`}>
-												<iframe
-													src={`https://player.vimeo.com/video/${item.vimeoId}?background=1&autoplay=1&loop=1&muted=1`}
-													frameborder="0"
-													allow="autoplay; fullscreen; picture-in-picture"
-													allowfullscreen
-													loading="lazy"
-													style="width: 100%; height: 100%;"
-												/>
-
-												<!-- <iframe
-													src={`https://player.vimeo.com/video/${item.vimeoId}` +
-														`?background=${item.playbackOption === 'autoplayLoop' ? 1 : 0}` +
-														`&muted=1` +
-														`&loop=1`}
-													frameborder="0"
-													allow="autoplay; fullscreen; picture-in-picture"
-													allowfullscreen
-													loading="lazy"
-													style="width: 100%; height: 100%;"
-												></iframe> -->
+												{#if item.playbackOption === 'autoplayLoop'}
+													<!-- Autoplay and loop video -->
+													<iframe
+														src={`https://player.vimeo.com/video/${item.vimeoId}?background=1&autoplay=1&loop=1&muted=1`}
+														frameborder="0"
+														allow="autoplay; fullscreen; picture-in-picture"
+														allowfullscreen
+														loading="lazy"
+														style="width: 100%; height: 100%;"
+													/>
+												{:else}
+													<!-- Normal video embed -->
+													<iframe
+														src={`https://player.vimeo.com/video/${item.vimeoId}` +
+															`?background=${item.playbackOption === 'autoplayLoop' ? 1 : 0}` +
+															`&muted=1` +
+															`&loop=1`}
+														frameborder="0"
+														allow="autoplay; fullscreen; picture-in-picture"
+														allowfullscreen
+														loading="lazy"
+														style="width: 100%; height: 100%;"
+													></iframe>
+												{/if}
 											</div>
-										{:else if item.type === 'file' && item.videoFileUrl}
-											<!-- <video
+											<!-- {:else if item.type === 'file' && item.videoFileUrl}
+											<video
 												src={item.videoFileUrl}
 												poster={item.posterImage?.asset?.url}
 												style={`width: ${item.width};`}

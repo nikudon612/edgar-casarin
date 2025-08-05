@@ -107,7 +107,8 @@ export const singleProjectQuery = groq`
       "videoFileUrl": videoFile.asset->url,
       posterImage {
         asset->{url}
-      }
+      },
+      playbackOption,
     },
     galleryRows[]{
       rowLayout,
@@ -122,6 +123,7 @@ export const singleProjectQuery = groq`
         posterImage {
           asset->{url}
         },
+        playbackOption,
         width
       }
     }
