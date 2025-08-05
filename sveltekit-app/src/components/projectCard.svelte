@@ -52,6 +52,7 @@
 		width: 100%;
 		object-fit: cover;
 		display: block;
+		-webkit-object-fit: cover; /* <— Safari needs this */
 	}
 
 	.project-card__image--none {

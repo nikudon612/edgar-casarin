@@ -238,16 +238,29 @@ export default {
               title: 'Vimeo Video ID',
               hidden: ({parent}) => parent?.type !== 'video',
               validation: (Rule) =>
-                Rule.custom((id) => {
-                  if (!id) return true
-                  return /^\d+$/.test(id) ? true : 'Vimeo ID must be numeric (Column Layout)'
-                }),
+                Rule.custom((id) =>
+                  !id || /^\d+$/.test(id) ? true : 'Vimeo ID must be numeric (Column Layout)',
+                ),
             },
             {
               name: 'posterImage',
               type: 'image',
               title: 'Poster Image (Optional)',
               hidden: ({parent}) => parent?.type !== 'video',
+            },
+            {
+              name: 'playbackOption',
+              title: 'Video Playback Option',
+              type: 'string',
+              hidden: ({parent}) => parent?.type !== 'video',
+              options: {
+                list: [
+                  {title: 'Autoplay & Loop (No Controls)', value: 'autoplayLoop'},
+                  {title: 'Playback Controls', value: 'controls'},
+                ],
+                layout: 'radio',
+              },
+              initialValue: 'autoplayLoop',
             },
           ],
         },
@@ -313,16 +326,29 @@ export default {
                       title: 'Vimeo Video ID',
                       hidden: ({parent}) => parent?.type !== 'video',
                       validation: (Rule) =>
-                        Rule.custom((id) => {
-                          if (!id) return true
-                          return /^\d+$/.test(id) ? true : 'Vimeo ID must be numeric (Row)'
-                        }),
+                        Rule.custom((id) =>
+                          !id || /^\d+$/.test(id) ? true : 'Vimeo ID must be numeric (Row)',
+                        ),
                     },
                     {
                       name: 'posterImage',
                       type: 'image',
                       title: 'Poster Image (Optional)',
                       hidden: ({parent}) => parent?.type !== 'video',
+                    },
+                    {
+                      name: 'playbackOption',
+                      title: 'Video Playback Option',
+                      type: 'string',
+                      hidden: ({parent}) => parent?.type !== 'video',
+                      options: {
+                        list: [
+                          {title: 'Autoplay & Loop (No Controls)', value: 'autoplayLoop'},
+                          {title: 'Playback Controls', value: 'controls'},
+                        ],
+                        layout: 'radio',
+                      },
+                      initialValue: 'autoplayLoop',
                     },
                     {
                       name: 'width',

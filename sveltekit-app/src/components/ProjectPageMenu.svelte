@@ -30,7 +30,9 @@
 	{#if project}
 		<div class="project-menu-info-container">
 			<p class="project-menu-title">{project.title}</p>
-			<p class="project-menu-desc">{project.description}</p>
+			<div class="project-menu-desc">
+				<PortableText value={project.description} />
+			</div>
 		</div>
 	{:else}
 		<p style="color:black; font-size:14px">Loading project data...</p>
