@@ -13,7 +13,7 @@
 		? urlFor(about.image).width(1200).height(630).auto('format').url()
 		: null;
 
-	console.log('about:', data.options.initial.data);
+	// console.log('about:', data.options.initial.data);
 </script>
 
 <svelte:head>
