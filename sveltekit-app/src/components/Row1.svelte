@@ -96,6 +96,7 @@
 		width: 100%;
 		flex: 1;
 		scrollbar-width: none;
+		height: 48vh;
 	}
 	.scroll-wrapper::-webkit-scrollbar {
 		display: none;
@@ -138,12 +139,14 @@
 	/* only new rule: hint to the browser we’ll animate this */
 	.inner-wrapper {
 		display: flex;
-		will-change: transform;
+		height: 100%; /* now it knows how tall it should be */
+		/* will-change: transform; */
 	}
 
 	/* same as before */
 	:global(.project-card) {
 		flex: 0 0 auto;
 		min-width: 300px;
+		height: 100%; /* will fill the 400px */
 	}
 </style>

@@ -5,7 +5,7 @@
 	const project = data.project;
 	const projects = data.projects;
 
-	// console.log('Project data:', project);
+	console.log('Project data:', project);
 	// console.log('Projects data:', projects);
 </script>
 
