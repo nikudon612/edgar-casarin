@@ -20,12 +20,12 @@
 	{:else}
 		<p style="color:black; font-size:14px">Loading project data...</p>
 	{/if}
-	<a href="/about" style="text-decoration: none; color:black" class="info">Info</a>
+	<a href="/info" style="text-decoration: none; color:black" class="info">Info</a>
 </div>
 <div class="mobile-page-menu">
 	<div class="mobile-menu-links">
 		<a href="/" style="text-decoration: none; color:black" class="portfolio">Portfolio</a>
-		<a href="/about" style="text-decoration: none; color:black" class="info">Info</a>
+		<a href="/info" style="text-decoration: none; color:black" class="info">Info</a>
 	</div>
 	{#if project}
 		<div class="project-menu-info-container">

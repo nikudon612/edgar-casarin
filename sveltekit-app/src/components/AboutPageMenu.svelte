@@ -3,7 +3,7 @@
 
 <div class="about-page-menu">
 	<a href="/" style="text-decoration: none;" class="portfolio">Edgar Casarin</a>
-	<a href="/about" style="text-decoration: none; color:black" class="info">Info</a>
+	<a href="/info" style="text-decoration: none; color:black" class="info">Info</a>
 	<a href="mailto:@design@edgarcasarin.xyz" style="text-decoration: none;" class="info"
 		>design@edgarcasarin.xyz</a
 	>
@@ -16,7 +16,7 @@
 		>
 	</div>
 	<div class="mobile-menu-bottom">
-		<a href="/about" style="text-decoration: none; color:black" class="info">INFO</a>
+		<a href="/info" style="text-decoration: none; color:black" class="info">INFO</a>
 	</div>
 </div>
 

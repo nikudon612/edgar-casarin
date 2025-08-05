@@ -9,6 +9,10 @@
 	const q = useQuery(data); // 👈 just like the template
 	$: ({ data: about } = $q); // 👈 destructure reactively
 
+	$: ogImage = about?.image?.asset?._ref
+		? urlFor(about.image).width(1200).height(630).auto('format').url()
+		: null;
+
 	console.log('about:', data.options.initial.data);
 </script>
 
@@ -19,7 +23,6 @@
 		content={about?.metaDescription ?? 'Learn more about Edgar Casarin and his creative work.'}
 	/>
 
-	<!-- Open Graph -->
 	<meta property="og:title" content={'About – Edgar Casarin'} />
 	<meta
 		property="og:description"
@@ -27,22 +30,28 @@
 	/>
 	<meta property="og:type" content="profile" />
 	<meta property="og:url" content="https://edgarcasarin.com/about" />
-	<meta
+	{#if ogImage}
+		<meta property="og:image" content={ogImage} />
+	{:else}
+		<!-- <meta property="og:image" content="https://edgarcasarin.com/default-og-image.jpg" /> -->
+	{/if}
+	<!-- <meta
 		property="og:image"
 		content={urlFor(about?.image).width(1200).height(630).auto('format').url()}
-	/>
+	/> -->
 
-	<!-- Twitter Card -->
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content={'About – Edgar Casarin'} />
 	<meta
 		name="twitter:description"
 		content={'Learn more about Edgar Casarin and his creative work.'}
 	/>
-	<meta
-		name="twitter:image"
-		content={urlFor(about?.image).width(1200).height(630).auto('format').url()}
-	/>
+	{#if ogImage}
+		<meta name="twitter:image" content={ogImage} />
+	{:else}
+		<!-- <meta name="twitter:image" content="https://edgarcasarin.com/default-og-image.jpg" /> -->
+	{/if}
+	<!-- <meta name="twitter:image" content={urlFor(about?.image).width(1200).height(630).auto('format').url()} /> -->
 </svelte:head>
 
 <div class="layout-container">
@@ -60,12 +69,14 @@
 						<PortableText value={about?.bio} />
 					</div>
 				{/if}
-				{#if about.image?.asset?._ref}
+				{#if about?.image?.asset?._ref}
 					<img
-						src={urlFor(about.image).width(800).auto('format').url()}
+						src={urlFor(about?.image).width(800).auto('format').url()}
 						alt="Headshot"
 						class="headshot"
 					/>
+				{:else}
+					<div />
 				{/if}
 			</section>
 		{:else}
