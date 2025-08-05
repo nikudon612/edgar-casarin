@@ -38,21 +38,39 @@
 </a>
 
 <style>
+	/* — your existing, cross-browser styles — */ /* — your existing cross-browser rules — */
 	.project-card {
-		flex: 0 0 auto; /* prevents shrinking */
+		flex: 0 0 auto;
 		height: 100%;
-		width: auto; /* or set to 100vw if you want each image to take up full width */
+		width: auto;
 		display: block;
 		overflow: hidden;
 		position: relative;
 	}
 
 	.project-card__image {
-		height: 100%;
-		width: 100%;
-		object-fit: cover;
 		display: block;
-		-webkit-object-fit: cover; /* <— Safari needs this */
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		-webkit-object-fit: cover;
+	}
+
+	/* — Safari/WebKit only override — */
+	/* — Safari/WebKit only — */
+	@supports (-webkit-appearance: none) {
+		.project-card {
+			/* undo your global 300px min-width */
+			min-width: 0 !important;
+			/* drive width from the image’s intrinsic aspect ratio */
+			width: -webkit-min-content !important;
+			width: min-content !important;
+		}
+		.project-card__image {
+			/* ensure the img still fills 100% height + auto width */
+			width: auto !important;
+			height: 100% !important;
+		}
 	}
 
 	.project-card__image--none {
