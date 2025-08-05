@@ -22,6 +22,7 @@
 	{/if}
 	<a href="/info" style="text-decoration: none; color:black" class="info">Info</a>
 </div>
+
 <div class="mobile-page-menu">
 	<div class="mobile-menu-links">
 		<a href="/" style="text-decoration: none; color:black" class="portfolio">Portfolio</a>
@@ -81,16 +82,30 @@
 		.project-page-menu {
 			display: none; /* Hide the desktop menu on mobile */
 		}
-		.mobile-page-menu {
+		/* .mobile-page-menu {
 			height: auto;
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
 			align-items: center;
-			width: 100%; /* ✅ Avoid 100vw to prevent overflow */
+			width: 100%; 
 			box-sizing: border-box;
 			overflow-x: hidden;
 			padding: 0.5rem;
+			z-index: 0; 
+			position: fixed;
+			top: 0;
+			left: 0;
+		} */
+
+		.mobile-page-menu {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 4rem; /* ← set this to your menu’s real height */
+			background: white;
+			z-index: 0;
 		}
 		.mobile-page-menu .project-menu-info-container {
 			flex: 1;
