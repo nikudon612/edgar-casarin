@@ -83,7 +83,7 @@
 		<div class="row-nav">
 			<h2 class="name">Edgar Casarin</h2>
 			<p class="center-text">{$hoveredProjectName}</p>
-			<a href="/about" class="info">Info</a>
+			<a href="/info" class="info">Info</a>
 		</div>
 		{#if row2Projects.length}
 			<Row2 projects={row2Projects} row="row2" />
