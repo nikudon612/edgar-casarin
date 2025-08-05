@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import ProjectCard from './ProjectCard.svelte';
-	import VideoCard from './VideoCard.svelte';
+	import ProjectCard from './projectCard.svelte';
+	import VideoCard from './videoCard.svelte';
 	import type { Project } from '$lib/sanity/queries';
 
 	export let projects: Project[];
