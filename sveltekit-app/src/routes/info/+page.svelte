@@ -17,13 +17,13 @@
 </script>
 
 <svelte:head>
-	<title>{about?.metaTitle ?? 'About – Edgar Casarin'}</title>
+	<title>{about?.metaTitle ?? 'Info – Edgar Casarin'}</title>
 	<meta
 		name="description"
 		content={about?.metaDescription ?? 'Learn more about Edgar Casarin and his creative work.'}
 	/>
 
-	<meta property="og:title" content={'About – Edgar Casarin'} />
+	<meta property="og:title" content={'Info – Edgar Casarin'} />
 	<meta
 		property="og:description"
 		content={'Learn more about Edgar Casarin and his creative work.'}
@@ -41,7 +41,7 @@
 	/> -->
 
 	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content={'About – Edgar Casarin'} />
+	<meta name="twitter:title" content={'Info – Edgar Casarin'} />
 	<meta
 		name="twitter:description"
 		content={'Learn more about Edgar Casarin and his creative work.'}
