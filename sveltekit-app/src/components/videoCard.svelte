@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { hoveredProjectName } from '$lib/stores';
 	import { fileUrlFor } from '$lib/sanity/fileUrl';
+	import { lazyVideo } from '$lib/loaders/lazyVideo';
 	import type { Project } from '$lib/sanity/queries';
 
 	export let proj: Project;
@@ -21,7 +22,16 @@
 	on:mouseenter={handleMouseEnter}
 	on:mouseleave={handleMouseLeave}
 >
-	<video class="project-card__image" {poster} autoplay loop muted playsinline>
+	<video
+		class="project-card__image"
+		{poster}
+		autoplay
+		loop
+		muted
+		playsinline
+		preload="none"
+		use:lazyVideo
+	>
 		{#if videoRef.endsWith('.webm')}
 			<source src={fileUrlFor(videoRef)} type="video/webm" />
 		{:else}

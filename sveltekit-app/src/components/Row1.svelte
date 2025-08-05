@@ -78,21 +78,6 @@
 			{#each images as item, i (item.proj._id + '-r1-' + i)}
 				{#if item.type === 'file' && item.videoRef}
 					<VideoCard proj={item.proj} videoRef={item.videoRef} row="row1" />
-					<!-- <a
-						class="project-card"
-						href={`/${item.proj.slug.current}`}
-						on:mouseenter={() => handleMouseEnter(item.proj.title)}
-						on:mouseleave={handleMouseLeave}
-					>
-						<video class="project-card__image" autoplay loop muted playsinline poster={item.poster}>
-							{#if item.videoRef.endsWith('webm')}
-								<source src={fileUrlFor(item.videoRef)} type="video/webm" />
-							{:else}
-								<source src={fileUrlFor(item.videoRef)} type="video/mp4" />
-							{/if}
-							Sorry, your browser doesn’t support embedded videos.
-						</video>
-					</a> -->
 				{:else if item.type === 'image'}
 					<ProjectCard proj={item.proj} row="row1" image={item.image} />
 				{:else}
@@ -100,24 +85,6 @@
 						<p>No image or video available</p>
 					</div>
 				{/if}
-
-				<!-- {#if item.vimeoId}
-					<a href={item.proj.slug.current} class="project-link">
-						<div class="project-card">
-							<div class="video-wrapper">
-								<iframe
-									src={`https://player.vimeo.com/video/${item.vimeoId}?background=1&autoplay=1&loop=1`}
-									frameborder="0"
-									allow="autoplay; fullscreen; picture-in-picture"
-									allowfullscreen
-									class="video-iframe"
-								/>
-							</div>
-						</div>
-					</a>
-				{:else}
-					<ProjectCard proj={item.proj} row="row1" image={item.image} />
-				{/if} -->
 			{/each}
 		{/each}
 	</div>
