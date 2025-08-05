@@ -49,18 +49,36 @@
 					{#if project.columnImages?.length}
 						<!-- COLUMN LAYOUT -->
 						<div class="gallery-column">
-							{#each project.columnImages ?? [] as img}
-								{#if img?.type === 'image'}
-									<img src={img?.image?.asset?.url} alt={project.title} />
-								{:else if img?.type === 'video'}
+							{#each project.columnImages as img}
+								{#if img.type === 'image' && img.image}
+									<img
+										src={img.image.asset.url}
+										alt={project.title}
+										style="width:100%; height:auto; display:block;"
+									/>
+								{:else if img.type === 'video' && img.vimeoId}
 									<div class="video-full">
-										<iframe
-											src={`https://player.vimeo.com/video/${img.vimeoId}?background=1&autoplay=0&muted=1&loop=0`}
-											frameborder="0"
-											allow="autoplay; fullscreen; picture-in-picture"
-											allowfullscreen
-											loading="lazy"
-										></iframe>
+										{#if img.playbackOption === 'controls'}
+											<!-- controls-only -->
+											<iframe
+												src={`https://player.vimeo.com/video/${img.vimeoId}?muted=1&controls=1`}
+												frameborder="0"
+												allow="autoplay; fullscreen; picture-in-picture"
+												allowfullscreen
+												loading="lazy"
+												style="width:100%; height:100%;"
+											></iframe>
+										{:else}
+											<!-- autoplay+loop, no controls -->
+											<iframe
+												src={`https://player.vimeo.com/video/${img.vimeoId}?background=1&autoplay=1&loop=1&muted=1`}
+												frameborder="0"
+												allow="autoplay; fullscreen; picture-in-picture"
+												allowfullscreen
+												loading="lazy"
+												style="width:100%; height:100%;"
+											></iframe>
+										{/if}
 									</div>
 								{/if}
 							{/each}
@@ -68,17 +86,53 @@
 					{:else if project.galleryRows?.length}
 						<!-- ROWS LAYOUT -->
 						<div class="gallery-rows">
-							{#each project.galleryRows ?? [] as row}
+							{#each project.galleryRows as row}
 								<div
-									class={`image-row row-${row?.rowLayout}`}
-									style={row?.disableGap ? 'margin-bottom: 0' : 'margin-bottom: 6rem'}
+									class={`image-row row-${row.rowLayout}`}
+									style={row.disableGap ? 'margin-bottom: 0' : 'margin-bottom: 6rem'}
 								>
-									{#each row.images ?? [] as item}
-										<img
-											src={item?.image?.asset?.url}
-											alt={project.title}
-											style={`width: ${item?.width || '100%'}`}
-										/>
+									{#each row.images as item}
+										{#if item.type === 'image' && item.image}
+											<img
+												src={item.image.asset.url}
+												alt={project.title}
+												style={`width: ${item.width}`}
+											/>
+										{:else if item.type === 'video' && item.vimeoId}
+											<div class="video-item" style={`width: ${item.width}; aspect-ratio: 16/9;`}>
+												{#if item.playbackOption === 'autoplayLoop'}
+													<!-- Autoplay and loop video -->
+													<iframe
+														src={`https://player.vimeo.com/video/${item.vimeoId}?background=1&autoplay=1&loop=1&muted=1`}
+														frameborder="0"
+														allow="autoplay; fullscreen; picture-in-picture"
+														allowfullscreen
+														loading="lazy"
+														style="width: 100%; height: 100%;"
+													/>
+												{:else}
+													<!-- Normal video embed -->
+													<iframe
+														src={`https://player.vimeo.com/video/${item.vimeoId}` +
+															`?background=${item.playbackOption === 'autoplayLoop' ? 1 : 0}` +
+															`&muted=1` +
+															`&loop=1`}
+														frameborder="0"
+														allow="autoplay; fullscreen; picture-in-picture"
+														allowfullscreen
+														loading="lazy"
+														style="width: 100%; height: 100%;"
+													></iframe>
+												{/if}
+											</div>
+											<!-- {:else if item.type === 'file' && item.videoFileUrl}
+											<video
+												src={item.videoFileUrl}
+												poster={item.posterImage?.asset?.url}
+												style={`width: ${item.width};`}
+												loading="lazy"
+											></video> -->
+										{/if}
 									{/each}
 								</div>
 							{/each}
@@ -117,6 +171,7 @@
 		flex: 1;
 		overflow-y: scroll;
 		background-color: #f7f7f5 !important;
+		z-index: 1; /* above the menu */
 	}
 
 	.content::-webkit-scrollbar-track {
@@ -205,8 +260,18 @@
 
 	/* Responsive adjustments */
 	@media (max-width: 768px) {
+		.content {
+			position: relative;
+			top: 4rem; /* ← same value as .mobile-page-menu height */
+			height: calc(100vh - 4rem);
+			overflow-y: auto;
+			z-index: 1;
+		}
 		.container {
-			overflow: visible;
+			display: flex;
+			flex-direction: column;
+			height: 100vh;
+			overflow: hidden;
 		}
 		.project-page-menu {
 			display: none; /* Hide menu on smaller screens */
