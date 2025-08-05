@@ -8,6 +8,8 @@
 	export let videoRef: string; // the raw "file-…-webm" ref
 	export let poster: string; // optional
 
+	let vid: HTMLVideoElement;
+
 	function handleMouseEnter() {
 		hoveredProjectName.set(proj.title);
 	}
@@ -22,7 +24,7 @@
 	on:mouseenter={handleMouseEnter}
 	on:mouseleave={handleMouseLeave}
 >
-	<video class="project-card__image" {poster} autoplay loop muted playsinline>
+	<video class="project-card__image" {poster} autoplay loop muted playsinline bind:this={vid}>
 		{#if videoRef.endsWith('.webm')}
 			<source src={fileUrlFor(videoRef)} type="video/webm" />
 		{:else}
@@ -47,5 +49,22 @@
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+		-webkit-object-fit: cover; /* Safari */
+	}
+
+	@supports (-webkit-appearance: none) {
+		.project-card {
+			/* undo any global min-width */
+			min-width: 0 !important;
+			/* shrink to the video’s intrinsic width when height=100% */
+			width: -webkit-min-content !important;
+			width: min-content !important;
+		}
+		.project-card__image {
+			/* let height drive the width via aspect ratio */
+			width: auto !important;
+			height: 100% !important;
+			display: block !important; /* ensure no inline-gap */
+		}
 	}
 </style>

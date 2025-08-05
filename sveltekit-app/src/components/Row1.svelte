@@ -102,40 +102,6 @@
 		display: none;
 	}
 
-	.video-wrapper {
-		position: relative;
-		width: 100%;
-		aspect-ratio: 16 / 9; /* ← lock in 16:9 */
-		overflow: hidden;
-	}
-
-	.video-wrapper .video-iframe {
-		position: absolute;
-		inset: 0; /* shorthand for top:0; right:0; bottom:0; left:0; */
-		width: 100%;
-		height: 100%;
-	}
-
-	.project-link {
-		display: block;
-		text-decoration: none;
-		color: inherit;
-		flex: 0 0 auto;
-		min-width: 300px;
-		height: 100%; /* match ProjectCard height */
-	}
-
-	.video-iframe {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		/* ensure it always fills at least the container in both dimensions */
-		min-width: 100%;
-		min-height: 100%;
-		/* we don’t need width/height explicitly—min-* will enforce cover */
-		/* transform: translate(-50%, -50%); */
-	}
-
 	/* only new rule: hint to the browser we’ll animate this */
 	.inner-wrapper {
 		display: flex;
@@ -146,7 +112,7 @@
 	/* same as before */
 	:global(.project-card) {
 		flex: 0 0 auto;
-		min-width: 300px;
+		/* min-width: 300px; */
 		height: 100%; /* will fill the 400px */
 	}
 </style>
