@@ -6,20 +6,27 @@
 	export let project;
 	export let projects;
 
-	let linkHeight = 0;
+	// we’ll capture two things:
+	//  • linkHeight: how tall your fixed menu is
+	//  • scrollY:   how far the user has scrolled the gallery
+	let menuHeight = 0; // total fixed menu height
+	let scrollY = 0; // how far gallery-scroll has moved
 
 	function onLinkHeight(e) {
-		linkHeight = e.detail.height;
+		menuHeight = e.detail.height;
+	}
+	function onScroll(e) {
+		scrollY = e.target.scrollTop;
 	}
 </script>
 
 <!-- MobileProjectLayout.svelte -->
 <div class="mobile-gallery">
 	<!-- 1) Nav always on top -->
-	<ProjectPageMenuMobile {project} class="mobile-nav" />
+	<ProjectPageMenuMobile {project} {scrollY} on:linksheight={onLinkHeight} class="mobile-nav" />
 
 	<!-- START your scrollable gallery exactly under the links -->
-	<div class="gallery-scroll">
+	<div class="gallery-scroll" on:scroll={onScroll} style="margin-top: {menuHeight}px">
 		<!-- 2) Description sits immediately under the nav, never scrolls -->
 		<div class="project-desc">
 			<PortableText value={project.description} />

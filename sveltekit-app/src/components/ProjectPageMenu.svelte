@@ -77,5 +77,8 @@
 		.project-page-menu {
 			display: none; /* Hide the desktop menu on mobile */
 		}
+		.project-menu-title {
+			display: none;
+		}
 	}
 </style>
