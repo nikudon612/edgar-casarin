@@ -3,17 +3,15 @@
 	import { PortableText } from '@portabletext/svelte';
 
 	const dispatch = createEventDispatcher();
-	let menuEl;
 	export let project;
+	let linksEl;
 
 	onMount(() => {
-		// measure after render
-		const height = menuEl.offsetHeight;
-		dispatch('menuheight', { height });
+		dispatch('linksheight', { height: linksEl.offsetHeight });
 	});
 </script>
 
-<div class="mobile-page-menu">
+<div class="mobile-page-menu" bind:this={linksEl}>
 	<div class="mobile-menu-links">
 		<a href="/" style="text-decoration: none; color:black" class="portfolio">Portfolio</a>
 		<a href="/info" style="text-decoration: none; color:black" class="info">Info</a>
@@ -21,9 +19,9 @@
 	{#if project}
 		<div class="project-menu-info-container">
 			<p class="project-menu-title">{project.title}</p>
-			<div class="project-menu-desc">
+			<!-- <div class="project-menu-desc">
 				<PortableText value={project.description} />
-			</div>
+			</div> -->
 		</div>
 	{:else}
 		<p style="color:black; font-size:14px">Loading project data...</p>
@@ -40,6 +38,13 @@
 			height: 4rem; /* ← set this to your menu’s real height */
 			background: white;
 			z-index: 0;
+		}
+
+		.project-menu-info-container {
+			position: relative;
+			z-index: 10;
+			padding: 1rem;
+			background: white;
 		}
 		.mobile-page-menu .project-menu-info-container {
 			flex: 1;

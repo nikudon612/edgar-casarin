@@ -1,6 +1,7 @@
 <script lang="ts">
 	import ProjectPageMenu from '../../components/ProjectPageMenu.svelte';
 	import ProjectCarousel from '../../components/ProjectCarousel.svelte';
+	import MobileProjectLayout from '../../components/MobileProjectLayout.svelte';
 
 	export let data;
 	const project = data.project;
@@ -151,7 +152,28 @@
 	</main>
 </div>
 
+<!-- Mobile layout -->
+<div class="mobile-only mobile-content">
+	<MobileProjectLayout {project} {projects} />
+</div>
+
 <style>
+	.desktop-only {
+		display: block;
+	}
+	.mobile-only {
+		display: none;
+	}
+
+	@media (max-width: 768px) {
+		.desktop-only {
+			display: none;
+		}
+		.mobile-only {
+			display: block;
+		}
+	}
+
 	.container {
 		display: flex;
 		height: 100vh;
