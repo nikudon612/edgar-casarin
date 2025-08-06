@@ -165,6 +165,11 @@
 		padding-top: 6.5rem;
 	}
 
+	:global(.project-desc a) {
+		color: #353535;
+		text-decoration: underline;
+	}
+
 	/* 3) Gallery items are on top of the desc */
 	.gallery-scroll img,
 	.gallery-scroll iframe {
