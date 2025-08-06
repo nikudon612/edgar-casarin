@@ -162,7 +162,7 @@
 		z-index: 10; /* below the images */
 		background: white;
 		padding: 1rem;
-		padding-top: 5.5rem;
+		padding-top: 6.5rem;
 	}
 
 	/* 3) Gallery items are on top of the desc */
