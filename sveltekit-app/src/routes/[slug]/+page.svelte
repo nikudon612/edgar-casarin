@@ -43,8 +43,13 @@
 		{/if}
 	</aside>
 
+	<!-- Mobile layout -->
+	<div class="mobile-only mobile-content">
+		<MobileProjectLayout {project} {projects} />
+	</div>
+
 	<!-- Scrollable project content -->
-	<main class="content">
+	<main class="content desktop-only">
 		{#if project}
 			<article class="project">
 				<section>
@@ -150,11 +155,6 @@
 		{/if}
 		<ProjectCarousel {projects} currentSlug={project?.slug?.current} />
 	</main>
-</div>
-
-<!-- Mobile layout -->
-<div class="mobile-only mobile-content">
-	<MobileProjectLayout {project} {projects} />
 </div>
 
 <style>

@@ -37,7 +37,7 @@
 			width: 100%;
 			height: 4rem; /* ← set this to your menu’s real height */
 			background: white;
-			z-index: 0;
+			z-index: 1000;
 		}
 
 		.project-menu-info-container {
@@ -49,11 +49,6 @@
 		.mobile-page-menu .project-menu-info-container {
 			flex: 1;
 			text-align: center;
-		}
-
-		.project-menu-desc {
-			text-align: left;
-			/* padding: 0.5rem; */
 		}
 
 		/* scope it to your project‐description container */
