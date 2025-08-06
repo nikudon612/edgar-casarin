@@ -15,8 +15,8 @@ export const load: PageServerLoad = async ({ locals }) => {
 	// Load about data
 	const aboutInitial = await loadQuery<About>(query);
 
-	console.log('Projects from Sanity:', projectInitial);
-	console.log('About from Sanity:', aboutInitial);
+	// console.log('Projects from Sanity:', projectInitial);
+	// console.log('About from Sanity:', aboutInitial);
 
 	return {
 		query: allProjectsQuery,

@@ -72,6 +72,7 @@
 		flex-direction: column;
 		align-items: start;
 		max-height: 235px;
+		z-index: 15; /* below the images */
 	}
 
 	.label-wrapper {
@@ -81,6 +82,7 @@
 		justify-items: center;
 		background-color: white !important;
 		height: 1.5rem;
+		z-index: 15; /* below the images */
 	}
 	.label {
 		flex: 0 0 auto;

@@ -1,6 +1,8 @@
 <script lang="ts">
 	import ProjectPageMenu from '../../components/ProjectPageMenu.svelte';
 	import ProjectCarousel from '../../components/ProjectCarousel.svelte';
+	import MobileProjectLayout from '../../components/MobileProjectLayout.svelte';
+
 	export let data;
 	const project = data.project;
 	const projects = data.projects;
@@ -10,7 +12,7 @@
 </script>
 
 <svelte:head>
-	<title>{project?.title}</title>
+	<title>{project?.title} - Edgar Casarin</title>
 	<meta name="description" content={project?.description || 'View project details'} />
 
 	<!-- Open Graph -->
@@ -41,8 +43,13 @@
 		{/if}
 	</aside>
 
+	<!-- Mobile layout -->
+	<div class="mobile-only mobile-content">
+		<MobileProjectLayout {project} {projects} />
+	</div>
+
 	<!-- Scrollable project content -->
-	<main class="content">
+	<main class="content desktop-only">
 		{#if project}
 			<article class="project">
 				<section>
@@ -151,6 +158,22 @@
 </div>
 
 <style>
+	.desktop-only {
+		display: block;
+	}
+	.mobile-only {
+		display: none;
+	}
+
+	@media (max-width: 768px) {
+		.desktop-only {
+			display: none;
+		}
+		.mobile-only {
+			display: block;
+		}
+	}
+
 	.container {
 		display: flex;
 		height: 100vh;

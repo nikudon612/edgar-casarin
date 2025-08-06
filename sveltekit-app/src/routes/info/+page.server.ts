@@ -5,7 +5,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 	const { loadQuery } = locals;
 	const initial = await loadQuery<About[]>(query);
 
-	console.log('data', initial);
+	// console.log('data', initial);
 
 	return {
 		query,
