@@ -1,56 +1,41 @@
+<!-- src/components/mobileProjectMenu.svelte -->
 <script>
 	import { onMount, createEventDispatcher } from 'svelte';
-	import { PortableText } from '@portabletext/svelte';
+
+	// Props:
+	//  • project: the current project object
+	//  • scrollY:  how far the gallery has scrolled (in px)
+	export let project;
+	export let scrollY = 0;
 
 	const dispatch = createEventDispatcher();
-	export let project;
-	export let scrollY = 0; // how far user scrolled
 
-	let rootEl; // the full fixed menu
-	let linkEl; // just the portfolio/info row
-	let menuHeight = 0;
+	// We only need to measure this one element
+	let linkEl;
 	let linkHeight = 0;
 
+	// When this component mounts, read the height of the link row
 	onMount(() => {
-		menuHeight = rootEl.offsetHeight;
 		linkHeight = linkEl.offsetHeight;
-		dispatch('linksheight', { height: menuHeight });
+		// Tell the parent/layout how tall to push the gallery down
+		dispatch('linksheight', { height: linkHeight });
 	});
 
-	// How far the title must move before it “locks” into the links row
-	$: maxTravel = menuHeight - linkHeight;
-
-	// Are we past that point?
-	$: isStuck = scrollY >= maxTravel;
-
-	// If not stuck, push it down by (maxTravel - scrollY)
-	$: titleOffset = isStuck
-		? linkHeight // lock into the bottom of the link row
-		: maxTravel - scrollY; // slide from menuHeight → linkHeight
+	// Compute Y offset: start at linkHeight, slide up to 0
+	$: titleY = Math.max(linkHeight - scrollY, 0);
 </script>
 
-<div class="mobile-page-menu" bind:this={rootEl}>
-	<!-- row‐1: Portfolio / Info -->
+<div class="mobile-page-menu">
 	<div class="mobile-menu-links" bind:this={linkEl}>
 		<a href="/" class="portfolio">Portfolio</a>
+
+		<!-- Title now lives inside the same flex row -->
+		<div class="project-title-wrapper" style="transform: translateY({titleY}px);">
+			<p class="project-menu-title">{project?.title}</p>
+		</div>
+
 		<a href="/info" class="info">Info</a>
 	</div>
-
-	{#if project}
-		<!-- row‐2: project title -->
-		<div
-			class="project-menu-info-container"
-			style="
-        position: absolute;
-        top: {titleOffset}px;
-        left: 0;
-        right: 0;
-        transition: top 0.1s linear;
-      "
-		>
-			<p class="project-menu-title">{project.title}</p>
-		</div>
-	{/if}
 </div>
 
 <style>
@@ -59,51 +44,38 @@
 			position: fixed;
 			top: 0;
 			left: 0;
-			width: 100%;
-			/* height: 4rem;  */
+			right: 0;
 			background: white;
 			z-index: 1000;
 		}
-		/* 2) title now absolutely placed _inside_ that fixed box */
-		.project-menu-info-container {
-			text-align: center;
-			background: white;
-			pointer-events: none; /* let taps through if clickable below */
+
+		.mobile-menu-links {
+			position: relative; /* for absolute children */
+			display: flex;
+			align-items: center; /* vertically center links/title */
+			justify-content: space-between;
+			padding: 1rem;
+		}
+
+		.project-title-wrapper {
+			position: absolute; /* taken out of normal flow */
+			left: 50%;
+			transform: translateX(-50%) /* center horizontally */ translateY(var(--y)); /* overridden inline */
+			transition: transform 0.1s linear;
+			pointer-events: none; /* clicks pass through */
 		}
 
 		.project-menu-title {
-			margin: 0.5rem 0;
+			margin: 0;
 			font-size: 1.125rem;
-		}
-		.mobile-page-menu .project-menu-info-container {
-			flex: 1;
-			text-align: center;
+			white-space: nowrap;
 		}
 
-		/* scope it to your project‐description container */
-		/* make every <a> inside your description use #333 + underline */
-		:global(.project-menu-desc a) {
-			color: #333;
-			text-decoration: underline;
-		}
+		/* Optional: style your links */
 		.mobile-menu-links a {
 			text-decoration: none;
 			color: #333;
-		}
-		.mobile-page-menu .mobile-menu-links {
-			display: flex;
-			flex-direction: row;
-			justify-content: space-between;
-			width: 100%;
-			text-decoration: none;
-			color: #333;
-		}
-
-		.info {
-			padding-bottom: 0rem;
-		}
-		.portfolio {
-			padding-top: 0rem;
+			font-weight: 500;
 		}
 	}
 </style>

@@ -33,7 +33,7 @@
 	<a href="/info" style="text-decoration: none; color:black" class="info">Info</a>
 </div>
 
-<MobileProjectMenu {project} bind:this={menuEl} on:menuheight />
+<!-- <MobileProjectMenu {project} bind:this={menuEl} on:menuheight /> -->
 
 <style>
 	.project-page-menu {
@@ -79,6 +79,10 @@
 		}
 		.project-menu-title {
 			display: none;
+		}
+		/* hide the legacy title on small screens */
+		.project-page-menu .project-menu-info-container {
+			display: none !important;
 		}
 	}
 </style>
