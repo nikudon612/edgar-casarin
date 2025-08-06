@@ -26,7 +26,7 @@
 	<ProjectPageMenuMobile {project} {scrollY} on:linksheight={onLinkHeight} class="mobile-nav" />
 
 	<!-- START your scrollable gallery exactly under the links -->
-	<div class="gallery-scroll" on:scroll={onScroll} style="margin-top: {menuHeight}px">
+	<div class="gallery-scroll" on:scroll={onScroll}>
 		<!-- 2) Description sits immediately under the nav, never scrolls -->
 		<div class="project-desc">
 			<PortableText value={project.description} />
@@ -162,7 +162,7 @@
 		z-index: 10; /* below the images */
 		background: white;
 		padding: 1rem;
-		padding-top: 5.5rem;
+		padding-top: 6.5rem;
 	}
 
 	/* 3) Gallery items are on top of the desc */
