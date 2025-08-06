@@ -119,8 +119,9 @@
 			<!-- No layout defined yet -->
 			<p>Project layout coming soon…</p>
 		{/if}
-
-		<ProjectCarousel {projects} currentSlug={project.slug.current} />
+		<div style="z-index: 15;">
+			<ProjectCarousel {projects} currentSlug={project.slug.current} />
+		</div>
 	</div>
 </div>
 
@@ -154,7 +155,7 @@
 		z-index: 10; /* below the images */
 		background: white;
 		padding: 1rem;
-        padding-top: 5.5rem;
+		padding-top: 5.5rem;
 	}
 
 	/* 3) Gallery items are on top of the desc */
@@ -169,5 +170,8 @@
 	.gallery-scroll > :not(.project-desc) {
 		position: relative;
 		z-index: 20;
+	}
+	.gallery-rows {
+		background-color: #f7f7f5 !important;
 	}
 </style>
