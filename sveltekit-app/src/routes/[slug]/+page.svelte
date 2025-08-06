@@ -1,6 +1,7 @@
 <script lang="ts">
 	import ProjectPageMenu from '../../components/ProjectPageMenu.svelte';
 	import ProjectCarousel from '../../components/ProjectCarousel.svelte';
+
 	export let data;
 	const project = data.project;
 	const projects = data.projects;
@@ -10,7 +11,7 @@
 </script>
 
 <svelte:head>
-	<title>{project?.title}</title>
+	<title>{project?.title} - Edgar Casarin</title>
 	<meta name="description" content={project?.description || 'View project details'} />
 
 	<!-- Open Graph -->
