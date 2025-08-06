@@ -4,27 +4,52 @@
 
 	const dispatch = createEventDispatcher();
 	export let project;
-	let linksEl;
+	export let scrollY = 0; // how far user scrolled
+
+	let rootEl; // the full fixed menu
+	let linkEl; // just the portfolio/info row
+	let menuHeight = 0;
+	let linkHeight = 0;
 
 	onMount(() => {
-		dispatch('linksheight', { height: linksEl.offsetHeight });
+		menuHeight = rootEl.offsetHeight;
+		linkHeight = linkEl.offsetHeight;
+		dispatch('linksheight', { height: menuHeight });
 	});
+
+	// How far the title must move before it “locks” into the links row
+	$: maxTravel = menuHeight - linkHeight;
+
+	// Are we past that point?
+	$: isStuck = scrollY >= maxTravel;
+
+	// If not stuck, push it down by (maxTravel - scrollY)
+	$: titleOffset = isStuck
+		? linkHeight // lock into the bottom of the link row
+		: maxTravel - scrollY; // slide from menuHeight → linkHeight
 </script>
 
-<div class="mobile-page-menu" bind:this={linksEl}>
-	<div class="mobile-menu-links">
-		<a href="/" style="text-decoration: none; color:black" class="portfolio">Portfolio</a>
-		<a href="/info" style="text-decoration: none; color:black" class="info">Info</a>
+<div class="mobile-page-menu" bind:this={rootEl}>
+	<!-- row‐1: Portfolio / Info -->
+	<div class="mobile-menu-links" bind:this={linkEl}>
+		<a href="/" class="portfolio">Portfolio</a>
+		<a href="/info" class="info">Info</a>
 	</div>
+
 	{#if project}
-		<div class="project-menu-info-container">
+		<!-- row‐2: project title -->
+		<div
+			class="project-menu-info-container"
+			style="
+        position: absolute;
+        top: {titleOffset}px;
+        left: 0;
+        right: 0;
+        transition: top 0.1s linear;
+      "
+		>
 			<p class="project-menu-title">{project.title}</p>
-			<!-- <div class="project-menu-desc">
-				<PortableText value={project.description} />
-			</div> -->
 		</div>
-	{:else}
-		<p style="color:black; font-size:14px">Loading project data...</p>
 	{/if}
 </div>
 
@@ -35,16 +60,20 @@
 			top: 0;
 			left: 0;
 			width: 100%;
-			height: 4rem; /* ← set this to your menu’s real height */
+			/* height: 4rem;  */
 			background: white;
 			z-index: 1000;
 		}
-
+		/* 2) title now absolutely placed _inside_ that fixed box */
 		.project-menu-info-container {
-			position: relative;
-			z-index: 10;
-			padding: 1rem;
+			text-align: center;
 			background: white;
+			pointer-events: none; /* let taps through if clickable below */
+		}
+
+		.project-menu-title {
+			margin: 0.5rem 0;
+			font-size: 1.125rem;
 		}
 		.mobile-page-menu .project-menu-info-container {
 			flex: 1;
@@ -57,11 +86,17 @@
 			color: #333;
 			text-decoration: underline;
 		}
+		.mobile-menu-links a {
+			text-decoration: none;
+			color: #333;
+		}
 		.mobile-page-menu .mobile-menu-links {
 			display: flex;
 			flex-direction: row;
 			justify-content: space-between;
 			width: 100%;
+			text-decoration: none;
+			color: #333;
 		}
 
 		.info {
